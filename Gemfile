@@ -63,4 +63,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  # Pin minitest to 5.x; minitest 6.x changed the run method signature and is
+  # incompatible with railties 8.0 (line_filtering.rb calls run with 3 args).
+  gem "minitest", "~> 5.25"
 end
