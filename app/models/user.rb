@@ -11,4 +11,20 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6 }, allow_nil: true
 
   before_save { self.email = email.downcase }
+
+  attr_accessor :remember_token
+
+  def remember
+    self.remember_token = SecureRandom.urlsafe_base64
+    update_column(:remember_digest, BCrypt::Password.create(remember_token))
+  end
+
+  def authenticated?(token)
+    return false if remember_digest.nil?
+    BCrypt::Password.new(remember_digest).is_password?(token)
+  end
+
+  def forget
+    update_column(:remember_digest, nil)
+  end
 end
