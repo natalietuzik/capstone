@@ -1,0 +1,18 @@
+☀️ Brighter Day — Daily Task Reminder
+======================================
+
+Hi <%= @user.email.split("@").first %>,
+
+Here are your tasks scheduled for <%= @tomorrow.strftime("%A, %B %d, %Y") %>:
+
+<% @tasks.each do |task| %>
+  • <%= task.title %><% if task.time_of_day %> (<%= task.time_of_day.strftime("%I:%M %p") %>)<% end %>
+<% if task.notes.present? %>    <%= task.notes %>
+<% end %>
+<% end %>
+
+Open your planner: <%= planner_items_url %>
+
+---
+You're receiving this because you have tasks scheduled for tomorrow.
+Log in to Brighter Day to manage your tasks.

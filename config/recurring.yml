@@ -1,0 +1,9 @@
+production:
+  send_task_reminders:
+    class: SendTaskRemindersJob
+    schedule: "0 8 * * *"  # Every day at 8:00 AM
+
+development:
+  send_task_reminders:
+    class: SendTaskRemindersJob
+    schedule: "0 8 * * *"  # Every day at 8:00 AM

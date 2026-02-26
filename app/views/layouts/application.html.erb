@@ -10,14 +10,12 @@
   <body>
     <nav class="navbar">
       <div class="nav-brand"><a href="/">☀️ Brighter Day</a></div>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle navigation">☰</button>
       <div class="nav-links">
         <% if logged_in? %>
           <%= link_to "Dashboard", root_path %>
           <%= link_to "Planner", planner_items_path %>
-          <%= link_to "To-Do", todo_items_path %>
-          <%= link_to "Journal", journal_entries_path %>
           <%= link_to "Calendar", calendar_path %>
-          <%= link_to "Medications", medications_path %>
           <%= link_to "Mental Health", mental_health_entries_path %>
           <%= link_to "Logout", logout_path, data: { turbo_method: :delete } %>
         <% else %>

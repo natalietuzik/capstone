@@ -39,7 +39,7 @@
       <% else %>
         <p class="empty-state">No medications tracked yet.</p>
       <% end %>
-      <%= link_to "Manage Medications", medications_path, class: "btn btn-secondary" %>
+      <%= link_to "Manage Medications", mental_health_entries_path, class: "btn btn-secondary" %>
     </div>
 
     <div class="card">
@@ -84,7 +84,7 @@
       <% else %>
         <p class="empty-state">Nothing pending — great job!</p>
       <% end %>
-      <%= link_to "View To-Do List", todo_items_path, class: "btn btn-secondary" %>
+      <%= link_to "View in Planner", planner_items_path, class: "btn btn-secondary" %>
     </div>
 
     <div class="card">
@@ -105,11 +105,8 @@
       <h2>🔗 Quick Links</h2>
       <ul class="quick-links">
         <li><%= link_to "📅 View Calendar", calendar_path %></li>
-        <li><%= link_to "📋 Manage Planner", planner_items_path %></li>
-        <li><%= link_to "✅ To-Do List", todo_items_path %></li>
-        <li><%= link_to "📓 Journal", journal_entries_path %></li>
-        <li><%= link_to "💊 Medications", medications_path %></li>
-        <li><%= link_to "🧠 Mental Health Log", mental_health_entries_path %></li>
+        <li><%= link_to "📋 Planner & To-Do", planner_items_path %></li>
+        <li><%= link_to "🧠 Mental Health, Medications & Journal", mental_health_entries_path %></li>
       </ul>
     </div>
   </div>

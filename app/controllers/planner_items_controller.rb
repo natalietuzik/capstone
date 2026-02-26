@@ -5,6 +5,7 @@ class PlannerItemsController < ApplicationController
   def index
     @date = params[:date] ? Date.parse(params[:date]) : Date.today
     @planner_items = current_user.planner_items.for_date(@date).ordered
+    @todo_items = current_user.todo_items.ordered
   end
 
   def show

@@ -17,7 +17,7 @@ class TodoItemsController < ApplicationController
     @todo_item = current_user.todo_items.build(todo_item_params)
     if @todo_item.save
       flash[:notice] = "To-do item added."
-      redirect_to todo_items_path
+      redirect_to planner_items_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -29,7 +29,7 @@ class TodoItemsController < ApplicationController
   def update
     if @todo_item.update(todo_item_params)
       flash[:notice] = "To-do item updated."
-      redirect_to todo_items_path
+      redirect_to planner_items_path
     else
       render :edit, status: :unprocessable_entity
     end
@@ -38,7 +38,7 @@ class TodoItemsController < ApplicationController
   def destroy
     @todo_item.destroy
     flash[:notice] = "To-do item deleted."
-    redirect_to todo_items_path
+    redirect_to planner_items_path
   end
 
   private
