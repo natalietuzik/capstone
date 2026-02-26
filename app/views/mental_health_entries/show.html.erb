@@ -1,0 +1,16 @@
+<div class="show-page">
+  <h1>🧠 <%= @entry.date.strftime("%A, %B %d, %Y") %></h1>
+  <div class="health-stats">
+    <div class="stat"><span class="stat-label">Mood</span><span class="stat-value"><%= @entry.mood %>/10</span></div>
+    <div class="stat"><span class="stat-label">Anxiety</span><span class="stat-value"><%= @entry.anxiety %>/10</span></div>
+    <% if @entry.sleep_hours %><div class="stat"><span class="stat-label">Sleep Hours</span><span class="stat-value"><%= @entry.sleep_hours %></span></div><% end %>
+  </div>
+  <% if @entry.journal.present? %>
+    <div class="journal-entry">
+      <h3>Journal</h3>
+      <p><%= simple_format(@entry.journal) %></p>
+    </div>
+  <% end %>
+  <%= link_to "Edit", edit_mental_health_entry_path(@entry), class: "btn btn-primary" %>
+  <%= link_to "Back", mental_health_entries_path, class: "btn btn-secondary" %>
+</div>

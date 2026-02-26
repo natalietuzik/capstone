@@ -1,0 +1,13 @@
+<div class="show-page">
+  <h1><%= @planner_item.title %></h1>
+  <p><strong>Date:</strong> <%= @planner_item.date.strftime("%B %d, %Y") %></p>
+  <% if @planner_item.time_of_day %>
+    <p><strong>Time:</strong> <%= @planner_item.time_of_day.strftime("%I:%M %p") %></p>
+  <% end %>
+  <p><strong>Status:</strong> <%= @planner_item.completed ? "Completed ✓" : "Pending" %></p>
+  <% if @planner_item.notes.present? %>
+    <p><strong>Notes:</strong> <%= @planner_item.notes %></p>
+  <% end %>
+  <%= link_to "Edit", edit_planner_item_path(@planner_item), class: "btn btn-primary" %>
+  <%= link_to "Back", planner_items_path(date: @planner_item.date), class: "btn btn-secondary" %>
+</div>

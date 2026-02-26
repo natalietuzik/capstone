@@ -1,0 +1,56 @@
+<div class="page-header">
+  <h1>✅ To-Do List</h1>
+  <%= link_to "+ Add Item", new_todo_item_path, class: "btn btn-primary" %>
+</div>
+
+<% pending = @todo_items.reject(&:completed) %>
+<% done    = @todo_items.select(&:completed) %>
+
+<% if @todo_items.any? %>
+  <% if pending.any? %>
+    <h2 style="margin-bottom: 0.75rem; color: var(--text);">Pending (<%= pending.size %>)</h2>
+    <div class="items-list">
+      <% pending.each do |item| %>
+        <div class="item-card">
+          <div class="item-header">
+            <h3><%= item.title %></h3>
+            <span class="badge <%= item.priority == 3 ? 'badge-info' : item.priority == 2 ? 'badge-pending' : 'badge-success' %>">
+              <%= TodoItem::PRIORITIES[item.priority] %>
+            </span>
+          </div>
+          <% if item.notes.present? %>
+            <p class="item-notes"><%= item.notes %></p>
+          <% end %>
+          <div class="item-actions">
+            <%= link_to "Edit", edit_todo_item_path(item), class: "btn btn-sm btn-secondary" %>
+            <%= link_to "✓ Done", todo_item_path(item, todo_item: { completed: true }), data: { turbo_method: :patch }, class: "btn btn-sm btn-success" %>
+            <%= link_to "Delete", todo_item_path(item), data: { turbo_method: :delete, turbo_confirm: "Delete this item?" }, class: "btn btn-sm btn-danger" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if done.any? %>
+    <h2 style="margin: 1.5rem 0 0.75rem; color: var(--text-muted);">Completed (<%= done.size %>)</h2>
+    <div class="items-list">
+      <% done.each do |item| %>
+        <div class="item-card item-completed">
+          <div class="item-header">
+            <h3><%= item.title %></h3>
+            <span class="badge badge-success">✓ Done</span>
+          </div>
+          <div class="item-actions">
+            <%= link_to "Reopen", todo_item_path(item, todo_item: { completed: false }), data: { turbo_method: :patch }, class: "btn btn-sm btn-secondary" %>
+            <%= link_to "Delete", todo_item_path(item), data: { turbo_method: :delete, turbo_confirm: "Delete this item?" }, class: "btn btn-sm btn-danger" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <div class="empty-state-box">
+    <p>Your to-do list is empty.</p>
+    <%= link_to "+ Add Your First Item", new_todo_item_path, class: "btn btn-primary" %>
+  </div>
+<% end %>

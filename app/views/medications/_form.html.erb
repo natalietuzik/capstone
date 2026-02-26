@@ -1,0 +1,22 @@
+<%= form_with model: medication, class: "form-card" do |f| %>
+  <% if medication.errors.any? %>
+    <div class="error-messages">
+      <% medication.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control", required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :dosage, "Dosage (optional)" %>
+    <%= f.text_field :dosage, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :instructions, "Instructions (optional)" %>
+    <%= f.text_area :instructions, class: "form-control", rows: 3 %>
+  </div>
+  <%= f.submit "Save Medication", class: "btn btn-primary" %>
+<% end %>

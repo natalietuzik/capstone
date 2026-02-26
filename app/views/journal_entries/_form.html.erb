@@ -1,0 +1,23 @@
+<%= form_with model: journal_entry, class: "form-card" do |f| %>
+  <% if journal_entry.errors.any? %>
+    <div class="error-messages">
+      <% journal_entry.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :date %>
+    <%= f.date_field :date, class: "form-control", required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control", placeholder: "Entry title", required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :body, "Write your thoughts..." %>
+    <%= f.text_area :body, class: "form-control", rows: 10, placeholder: "What's on your mind today?" %>
+  </div>
+  <%= f.submit "Save Entry", class: "btn btn-primary" %>
+  <%= link_to "Cancel", journal_entries_path, class: "btn btn-secondary" %>
+<% end %>

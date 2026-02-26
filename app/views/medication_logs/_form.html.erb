@@ -1,0 +1,26 @@
+<%= form_with model: medication_log, url: medication_log.new_record? ? medication_medication_logs_path(medication) : medication_log_path(medication_log), class: "form-card" do |f| %>
+  <% if medication_log.errors.any? %>
+    <div class="error-messages">
+      <% medication_log.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :date %>
+    <%= f.date_field :date, class: "form-control", required: true %>
+  </div>
+  <div class="form-group form-check">
+    <%= f.check_box :taken, class: "form-check-input" %>
+    <%= f.label :taken, "Taken?", class: "form-check-label" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :time_taken, "Time Taken (optional)" %>
+    <%= f.time_field :time_taken, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :notes, "Notes (optional)" %>
+    <%= f.text_area :notes, class: "form-control", rows: 2 %>
+  </div>
+  <%= f.submit "Save Log", class: "btn btn-primary" %>
+<% end %>

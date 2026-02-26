@@ -1,0 +1,20 @@
+<div class="show-page">
+  <div class="page-header">
+    <h1>📓 <%= @journal_entry.title %></h1>
+    <span class="time-badge"><%= @journal_entry.date.strftime("%B %d, %Y") %></span>
+  </div>
+
+  <div class="journal-entry">
+    <% if @journal_entry.body.present? %>
+      <p style="white-space: pre-wrap;"><%= @journal_entry.body %></p>
+    <% else %>
+      <p class="empty-state">No content written for this entry.</p>
+    <% end %>
+  </div>
+
+  <div class="item-actions">
+    <%= link_to "Edit", edit_journal_entry_path(@journal_entry), class: "btn btn-secondary" %>
+    <%= link_to "Delete", journal_entry_path(@journal_entry), data: { turbo_method: :delete, turbo_confirm: "Delete this entry?" }, class: "btn btn-danger" %>
+    <%= link_to "Back to Journal", journal_entries_path, class: "btn btn-secondary" %>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="show-page">
+  <div class="page-header">
+    <h1>💊 <%= @medication.name %></h1>
+    <%= link_to "Edit", edit_medication_path(@medication), class: "btn btn-secondary" %>
+  </div>
+  <% if @medication.dosage.present? %><p><strong>Dosage:</strong> <%= @medication.dosage %></p><% end %>
+  <% if @medication.instructions.present? %><p><strong>Instructions:</strong> <%= @medication.instructions %></p><% end %>
+
+  <div class="section-header">
+    <h2>Recent Logs</h2>
+    <%= link_to "+ Log Today", new_medication_medication_log_path(@medication), class: "btn btn-primary" %>
+  </div>
+
+  <% if @medication_logs.any? %>
+    <table class="data-table">
+      <thead>
+        <tr><th>Date</th><th>Taken</th><th>Time Taken</th><th>Notes</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <% @medication_logs.each do |log| %>
+          <tr>
+            <td><%= log.date.strftime("%b %d, %Y") %></td>
+            <td><%= log.taken ? "✓ Yes" : "✗ No" %></td>
+            <td><%= log.time_taken&.strftime("%I:%M %p") %></td>
+            <td><%= log.notes %></td>
+            <td>
+              <%= link_to "Edit", edit_medication_log_path(log), class: "btn btn-sm btn-secondary" %>
+              <%= link_to "Delete", medication_log_path(log), data: { turbo_method: :delete, turbo_confirm: "Delete?" }, class: "btn btn-sm btn-danger" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="empty-state">No logs yet.</p>
+  <% end %>
+  <%= link_to "Back to Medications", medications_path, class: "btn btn-secondary" %>
+</div>

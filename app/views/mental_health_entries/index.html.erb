@@ -1,0 +1,34 @@
+<div class="page-header">
+  <h1>🧠 Mental Health Log</h1>
+  <%= link_to "+ New Entry", new_mental_health_entry_path, class: "btn btn-primary" %>
+</div>
+
+<% if @entries.any? %>
+  <div class="items-list">
+    <% @entries.each do |entry| %>
+      <div class="item-card">
+        <div class="item-header">
+          <h3><%= entry.date.strftime("%A, %B %d, %Y") %></h3>
+        </div>
+        <div class="health-stats">
+          <div class="stat"><span class="stat-label">Mood</span><span class="stat-value"><%= entry.mood %>/10</span></div>
+          <div class="stat"><span class="stat-label">Anxiety</span><span class="stat-value"><%= entry.anxiety %>/10</span></div>
+          <% if entry.sleep_hours %><div class="stat"><span class="stat-label">Sleep</span><span class="stat-value"><%= entry.sleep_hours %>h</span></div><% end %>
+        </div>
+        <% if entry.journal.present? %>
+          <p class="item-notes"><%= truncate(entry.journal, length: 100) %></p>
+        <% end %>
+        <div class="item-actions">
+          <%= link_to "View", mental_health_entry_path(entry), class: "btn btn-sm btn-secondary" %>
+          <%= link_to "Edit", edit_mental_health_entry_path(entry), class: "btn btn-sm btn-secondary" %>
+          <%= link_to "Delete", mental_health_entry_path(entry), data: { turbo_method: :delete, turbo_confirm: "Delete this entry?" }, class: "btn btn-sm btn-danger" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="empty-state-box">
+    <p>No mental health entries yet.</p>
+    <%= link_to "+ Add Today's Entry", new_mental_health_entry_path, class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,85 @@
+<div class="calendar-page">
+  <div class="calendar-header">
+    <h1>📅 Calendar</h1>
+    <div class="month-nav">
+      <%= link_to "< #{@prev_month.strftime('%b %Y')}", calendar_path(year: @prev_month.year, month: @prev_month.month), class: "btn btn-secondary" %>
+      <span class="month-title"><%= @current_month.strftime("%B %Y") %></span>
+      <%= link_to "#{@next_month.strftime('%b %Y')} >", calendar_path(year: @next_month.year, month: @next_month.month), class: "btn btn-secondary" %>
+    </div>
+  </div>
+
+  <div class="calendar-grid">
+    <% %w[Sun Mon Tue Wed Thu Fri Sat].each do |day| %>
+      <div class="calendar-day-header"><%= day %></div>
+    <% end %>
+
+    <% current_date = @start_date %>
+    <% while current_date <= @end_date %>
+      <% is_current_month = current_date.month == @month %>
+      <% is_today = current_date == Date.today %>
+      <% is_selected = current_date == @selected_date %>
+      <div class="calendar-day <%= 'other-month' unless is_current_month %> <%= 'today' if is_today %> <%= 'selected' if is_selected %>">
+        <%= link_to calendar_path(year: @year, month: @month, selected_date: current_date), class: "day-link" do %>
+          <span class="day-number"><%= current_date.day %></span>
+          <% if @planner_items[current_date]&.any? %>
+            <span class="day-dot dot-task" title="<%= @planner_items[current_date].size %> task(s)"></span>
+          <% end %>
+          <% if @mental_health_entries[current_date] %>
+            <span class="day-dot dot-mood" title="Mood: <%= @mental_health_entries[current_date].mood %>"></span>
+          <% end %>
+          <% if @medication_logs[current_date]&.any? %>
+            <span class="day-dot dot-med" title="<%= @medication_logs[current_date].size %> med log(s)"></span>
+          <% end %>
+        <% end %>
+      </div>
+      <% current_date += 1.day %>
+    <% end %>
+  </div>
+
+  <% if @selected_date %>
+    <div class="day-details">
+      <h2>📆 <%= @selected_date.strftime("%A, %B %d, %Y") %></h2>
+
+      <div class="day-details-grid">
+        <div class="card">
+          <h3>Tasks</h3>
+          <% if @day_planner_items.any? %>
+            <ul class="task-list">
+              <% @day_planner_items.each do |item| %>
+                <li class="<%= 'completed' if item.completed %>"><%= item.title %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="empty-state">No tasks</p>
+          <% end %>
+          <%= link_to "+ Add Task", new_planner_item_path(date: @selected_date), class: "btn btn-sm btn-secondary" %>
+        </div>
+
+        <div class="card">
+          <h3>Mental Health</h3>
+          <% if @day_mental_health %>
+            <p>Mood: <%= @day_mental_health.mood %>/10</p>
+            <p>Anxiety: <%= @day_mental_health.anxiety %>/10</p>
+            <%= link_to "Edit", edit_mental_health_entry_path(@day_mental_health), class: "btn btn-sm btn-secondary" %>
+          <% else %>
+            <p class="empty-state">No entry</p>
+            <%= link_to "+ Log Entry", new_mental_health_entry_path(date: @selected_date), class: "btn btn-sm btn-secondary" %>
+          <% end %>
+        </div>
+
+        <div class="card">
+          <h3>Medications</h3>
+          <% if @day_med_logs.any? %>
+            <ul class="med-list">
+              <% @day_med_logs.each do |log| %>
+                <li><%= log.medication.name %>: <%= log.taken ? "✓" : "✗" %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="empty-state">No logs</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
