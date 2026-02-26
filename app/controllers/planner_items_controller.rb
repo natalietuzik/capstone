@@ -1,6 +1,6 @@
 class PlannerItemsController < ApplicationController
   before_action :require_login
-  before_action :set_planner_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_planner_item, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @date = params[:date] ? Date.parse(params[:date]) : Date.today

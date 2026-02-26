@@ -1,6 +1,6 @@
 class TodoItemsController < ApplicationController
   before_action :require_login
-  before_action :set_todo_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_todo_item, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @todo_items = current_user.todo_items.ordered

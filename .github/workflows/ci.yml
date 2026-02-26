@@ -42,6 +42,7 @@ jobs:
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
         run: bundle exec importmap audit
+        run: bin/rails importmap:audit
 
   lint:
     runs-on: ubuntu-latest
