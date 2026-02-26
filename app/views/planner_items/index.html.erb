@@ -25,7 +25,7 @@
           <%= link_to "Edit", edit_planner_item_path(item), class: "btn btn-sm btn-secondary" %>
           <%= link_to "Delete", planner_item_path(item), data: { turbo_method: :delete, turbo_confirm: "Delete this task?" }, class: "btn btn-sm btn-danger" %>
           <% unless item.completed %>
-            <%= link_to "✓ Mark Done", edit_planner_item_path(item), class: "btn btn-sm btn-success" %>
+            <%= link_to "✓ Mark Done", planner_item_path(item, planner_item: { completed: true }), data: { turbo_method: :patch }, class: "btn btn-sm btn-success" %>
           <% end %>
         </div>
       </div>

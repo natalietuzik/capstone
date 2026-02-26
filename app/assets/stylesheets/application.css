@@ -12,18 +12,18 @@
 /* Brighter Day App Styles */
 
 :root {
-  --primary:       #c4704a;   /* warm terracotta */
-  --primary-dark:  #a85a38;   /* deeper terracotta */
-  --primary-light: #f0c4a8;   /* soft peach */
-  --bg:            #fdf8f3;   /* warm cream */
+  --primary:       #4a9fd4;   /* sky blue */
+  --primary-dark:  #3080b5;   /* deeper sky blue */
+  --primary-light: #b8dcf5;   /* soft sky blue */
+  --bg:            #f0f8ff;   /* alice blue */
   --surface:       #ffffff;
-  --text:          #4a3728;   /* dark warm brown */
-  --text-muted:    #9c7b6b;   /* muted warm brown */
-  --border:        #e8d5c4;   /* warm beige border */
-  --sage:          #7aaa8c;   /* soothing sage green */
-  --sage-dark:     #5d8f6f;
-  --amber:         #e8a340;   /* warm amber accent */
-  --rose:          #d4776a;   /* dusty rose */
+  --text:          #1e3a52;   /* deep navy text */
+  --text-muted:    #6b8fa8;   /* muted blue-grey */
+  --border:        #c5dff0;   /* light blue border */
+  --sage:          #5db87a;   /* fresh green */
+  --sage-dark:     #3f9e60;
+  --amber:         #f9c74f;   /* sunshine yellow */
+  --rose:          #f07ba0;   /* cheerful pink */
 }
 
 * {
@@ -47,7 +47,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 6px rgba(100,50,20,0.18);
+  box-shadow: 0 2px 6px rgba(30,58,82,0.18);
 }
 
 .nav-brand a {
@@ -111,7 +111,7 @@ body {
   background: var(--surface);
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(100,50,20,0.1);
+  box-shadow: 0 2px 10px rgba(30,58,82,0.1);
 }
 
 .auth-container h1 {
@@ -140,7 +140,7 @@ body {
   background: var(--surface);
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(100,50,20,0.08);
+  box-shadow: 0 2px 10px rgba(30,58,82,0.08);
   margin-bottom: 1rem;
 }
 
@@ -163,13 +163,13 @@ body {
   border-radius: 6px;
   font-size: 0.95rem;
   transition: border-color 0.2s;
-  background-color: #fffaf7;
+  background-color: #edf7ff;
 }
 
 .form-control:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(196,112,74,0.15);
+  box-shadow: 0 0 0 3px rgba(74,159,212,0.2);
 }
 
 .form-check {
@@ -225,13 +225,13 @@ body {
 }
 
 .btn-secondary {
-  background-color: #f5ede6;
+  background-color: #e6f4fb;
   color: var(--text);
   border: 1px solid var(--border);
 }
 
 .btn-secondary:hover {
-  background-color: #eedad0;
+  background-color: #d4ecfb;
 }
 
 .btn-success {
@@ -249,7 +249,7 @@ body {
 }
 
 .btn-danger:hover {
-  background-color: #bc5e52;
+  background-color: #c9538a;
 }
 
 .btn-sm {
@@ -262,7 +262,7 @@ body {
   background: var(--surface);
   border-radius: 10px;
   padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(100,50,20,0.08);
+  box-shadow: 0 2px 8px rgba(30,58,82,0.08);
   margin-bottom: 1rem;
 }
 
@@ -297,7 +297,7 @@ body {
 
 .task-list li, .med-list li {
   padding: 0.4rem 0;
-  border-bottom: 1px solid #f0e4d8;
+  border-bottom: 1px solid #d8edf8;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -355,7 +355,7 @@ body {
   background: var(--surface);
   border-radius: 10px;
   padding: 1.2rem 1.5rem;
-  box-shadow: 0 2px 6px rgba(100,50,20,0.07);
+  box-shadow: 0 2px 6px rgba(30,58,82,0.07);
   margin-bottom: 0.8rem;
   border-left: 4px solid var(--primary-light);
 }
@@ -396,12 +396,12 @@ body {
 }
 
 .badge-success { background-color: #d9efe2; color: #2e6b47; }
-.badge-pending { background-color: #fef3d0; color: #7a5c10; }
-.badge-info    { background-color: #fce8d8; color: #7a3e18; }
+.badge-pending { background-color: #fef8d0; color: #7a5c10; }
+.badge-info    { background-color: #d8edf8; color: #1e3a52; }
 
 .time-badge {
-  background-color: #fce8d8;
-  color: #7a3e18;
+  background-color: #d8edf8;
+  color: #1e3a52;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
   font-size: 0.8rem;
@@ -446,7 +446,7 @@ body {
   border-radius: 10px;
   padding: 3rem;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(100,50,20,0.07);
+  box-shadow: 0 2px 6px rgba(30,58,82,0.07);
 }
 
 .empty-state-box p {
@@ -461,18 +461,18 @@ body {
   background: var(--surface);
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(100,50,20,0.07);
+  box-shadow: 0 2px 6px rgba(30,58,82,0.07);
 }
 
 .data-table th, .data-table td {
   padding: 0.75rem 1rem;
   text-align: left;
-  border-bottom: 1px solid #f0e4d8;
+  border-bottom: 1px solid #d8edf8;
   font-size: 0.9rem;
 }
 
 .data-table th {
-  background-color: #fdf0e6;
+  background-color: #e6f4fb;
   font-weight: 600;
   color: var(--text);
 }
@@ -492,7 +492,7 @@ body {
   border-radius: 10px;
   padding: 1.5rem;
   margin: 1rem 0;
-  box-shadow: 0 2px 6px rgba(100,50,20,0.07);
+  box-shadow: 0 2px 6px rgba(30,58,82,0.07);
 }
 
 .section-header {
@@ -557,7 +557,7 @@ body {
 }
 
 .calendar-day.other-month {
-  background: #fdf4ec;
+  background: #e8f4fd;
 }
 
 .calendar-day.today .day-number {
@@ -572,7 +572,7 @@ body {
 }
 
 .calendar-day.selected {
-  background: #fef0e6;
+  background: #dff0fb;
   outline: 2px solid var(--primary-light);
 }
 
