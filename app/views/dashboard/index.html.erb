@@ -69,10 +69,45 @@
     </div>
 
     <div class="card">
+      <h2>✅ To-Do List</h2>
+      <% if @pending_todos.any? %>
+        <ul class="task-list">
+          <% @pending_todos.each do |item| %>
+            <li>
+              <%= item.title %>
+              <span class="badge <%= item.priority == 3 ? 'badge-info' : item.priority == 2 ? 'badge-pending' : 'badge-success' %>">
+                <%= TodoItem::PRIORITIES[item.priority] %>
+              </span>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="empty-state">Nothing pending — great job!</p>
+      <% end %>
+      <%= link_to "View To-Do List", todo_items_path, class: "btn btn-secondary" %>
+    </div>
+
+    <div class="card">
+      <h2>📓 Journal</h2>
+      <% if @recent_journal %>
+        <p style="font-weight:600; margin-bottom:0.25rem;"><%= @recent_journal.title %></p>
+        <p class="item-notes"><%= @recent_journal.date.strftime("%B %d, %Y") %></p>
+        <% if @recent_journal.body.present? %>
+          <p class="item-notes"><%= truncate(@recent_journal.body, length: 100) %></p>
+        <% end %>
+      <% else %>
+        <p class="empty-state">No journal entries yet.</p>
+      <% end %>
+      <%= link_to "+ New Entry", new_journal_entry_path, class: "btn btn-secondary" %>
+    </div>
+
+    <div class="card">
       <h2>🔗 Quick Links</h2>
       <ul class="quick-links">
         <li><%= link_to "📅 View Calendar", calendar_path %></li>
         <li><%= link_to "📋 Manage Planner", planner_items_path %></li>
+        <li><%= link_to "✅ To-Do List", todo_items_path %></li>
+        <li><%= link_to "📓 Journal", journal_entries_path %></li>
         <li><%= link_to "💊 Medications", medications_path %></li>
         <li><%= link_to "🧠 Mental Health Log", mental_health_entries_path %></li>
       </ul>

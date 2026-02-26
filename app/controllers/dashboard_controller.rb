@@ -7,5 +7,7 @@ class DashboardController < ApplicationController
     @medications = current_user.medications.includes(:medication_logs)
     @todays_mental_health = current_user.mental_health_entries.find_by(date: @today)
     @todays_med_logs = current_user.medication_logs.where(date: @today).includes(:medication)
+    @pending_todos = current_user.todo_items.pending.order(priority: :desc).limit(5)
+    @recent_journal = current_user.journal_entries.ordered.first
   end
 end

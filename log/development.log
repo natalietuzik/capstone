@@ -52,3 +52,120 @@ FOREIGN KEY ("user_id")
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Capstone'*/[0m
   [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Capstone'*/[0m
   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Capstone'*/[0m
+Migrating to CreateJournalEntries (20260226012234)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Capstone'*/[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "journal_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "date" date, "title" varchar, "body" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_journal_entries_on_user_id" ON "journal_entries" ("user_id") /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ajournal_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "date" date, "title" varchar, "body" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_ajournal_entries_on_user_id" ON "ajournal_entries" ("user_id") /*application='Capstone'*/[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "ajournal_entries" ("id","user_id","date","title","body","created_at","updated_at")
+                     SELECT "id","user_id","date","title","body","created_at","updated_at" FROM "journal_entries" /*application='Capstone'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "journal_entries" /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "journal_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "date" date, "title" varchar, "body" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_4ea185c6f0"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_journal_entries_on_user_id" ON "journal_entries" ("user_id") /*application='Capstone'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "journal_entries" ("id","user_id","date","title","body","created_at","updated_at")
+                     SELECT "id","user_id","date","title","body","created_at","updated_at" FROM "ajournal_entries" /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "ajournal_entries" /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0 /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1 /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260226012234') RETURNING "version" /*application='Capstone'*/[0m
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Capstone'*/[0m
+Migrating to CreateTodoItems (20260226012235)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Capstone'*/[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "todo_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "title" varchar, "notes" text, "completed" boolean DEFAULT FALSE NOT NULL, "priority" integer DEFAULT 2 NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_todo_items_on_user_id" ON "todo_items" ("user_id") /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "atodo_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "title" varchar, "notes" text, "completed" boolean DEFAULT FALSE NOT NULL, "priority" integer DEFAULT 2 NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_atodo_items_on_user_id" ON "atodo_items" ("user_id") /*application='Capstone'*/[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "atodo_items" ("id","user_id","title","notes","completed","priority","created_at","updated_at")
+                     SELECT "id","user_id","title","notes","completed","priority","created_at","updated_at" FROM "todo_items" /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "todo_items" /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "todo_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "title" varchar, "notes" text, "completed" boolean DEFAULT FALSE NOT NULL, "priority" integer DEFAULT 2 NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_d6ff5e17fe"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_todo_items_on_user_id" ON "todo_items" ("user_id") /*application='Capstone'*/[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todo_items" ("id","user_id","title","notes","completed","priority","created_at","updated_at")
+                     SELECT "id","user_id","title","notes","completed","priority","created_at","updated_at" FROM "atodo_items" /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "atodo_items" /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0 /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1 /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260226012235') RETURNING "version" /*application='Capstone'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Capstone'*/[0m
+Migrating to AddNotNullConstraintsToJournalEntriesAndTodoItems (20260226012540)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ajournal_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "date" date, "title" varchar, "body" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_ajournal_entries_on_user_id" ON "ajournal_entries" ("user_id") /*application='Capstone'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "ajournal_entries" ("id","user_id","date","title","body","created_at","updated_at")
+                     SELECT "id","user_id","date","title","body","created_at","updated_at" FROM "journal_entries" /*application='Capstone'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "journal_entries" /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "journal_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "date" date NOT NULL, "title" varchar, "body" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_4ea185c6f0"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_journal_entries_on_user_id" ON "journal_entries" ("user_id") /*application='Capstone'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "journal_entries" ("id","user_id","date","title","body","created_at","updated_at")
+                     SELECT "id","user_id","date","title","body","created_at","updated_at" FROM "ajournal_entries" /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "ajournal_entries" /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0 /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1 /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ajournal_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "date" date NOT NULL, "title" varchar, "body" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_ajournal_entries_on_user_id" ON "ajournal_entries" ("user_id") /*application='Capstone'*/[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "ajournal_entries" ("id","user_id","date","title","body","created_at","updated_at")
+                     SELECT "id","user_id","date","title","body","created_at","updated_at" FROM "journal_entries" /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "journal_entries" /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "journal_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "date" date NOT NULL, "title" varchar NOT NULL, "body" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_4ea185c6f0"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_journal_entries_on_user_id" ON "journal_entries" ("user_id") /*application='Capstone'*/[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "journal_entries" ("id","user_id","date","title","body","created_at","updated_at")
+                     SELECT "id","user_id","date","title","body","created_at","updated_at" FROM "ajournal_entries" /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "ajournal_entries" /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0 /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1 /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "atodo_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "title" varchar, "notes" text, "completed" boolean DEFAULT FALSE NOT NULL, "priority" integer DEFAULT 2 NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_atodo_items_on_user_id" ON "atodo_items" ("user_id") /*application='Capstone'*/[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "atodo_items" ("id","user_id","title","notes","completed","priority","created_at","updated_at")
+                     SELECT "id","user_id","title","notes","completed","priority","created_at","updated_at" FROM "todo_items" /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "todo_items" /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "todo_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "title" varchar NOT NULL, "notes" text, "completed" boolean DEFAULT FALSE NOT NULL, "priority" integer DEFAULT 2 NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_d6ff5e17fe"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_todo_items_on_user_id" ON "todo_items" ("user_id") /*application='Capstone'*/[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todo_items" ("id","user_id","title","notes","completed","priority","created_at","updated_at")
+                     SELECT "id","user_id","title","notes","completed","priority","created_at","updated_at" FROM "atodo_items" /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "atodo_items" /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0 /*application='Capstone'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1 /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260226012540') RETURNING "version" /*application='Capstone'*/[0m
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Capstone'*/[0m

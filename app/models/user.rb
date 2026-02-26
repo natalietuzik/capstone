@@ -4,6 +4,8 @@ class User < ApplicationRecord
   has_many :medications, dependent: :destroy
   has_many :medication_logs, dependent: :destroy
   has_many :mental_health_entries, dependent: :destroy
+  has_many :journal_entries, dependent: :destroy
+  has_many :todo_items, dependent: :destroy
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }, allow_nil: true

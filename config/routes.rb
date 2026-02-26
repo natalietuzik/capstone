@@ -12,5 +12,7 @@ Rails.application.routes.draw do
     resources :medication_logs, shallow: true
   end
   resources :mental_health_entries
+  resources :journal_entries
+  resources :todo_items
   get '/calendar', to: 'calendar#index'
 end

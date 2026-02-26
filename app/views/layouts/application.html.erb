@@ -14,6 +14,8 @@
         <% if logged_in? %>
           <%= link_to "Dashboard", root_path %>
           <%= link_to "Planner", planner_items_path %>
+          <%= link_to "To-Do", todo_items_path %>
+          <%= link_to "Journal", journal_entries_path %>
           <%= link_to "Calendar", calendar_path %>
           <%= link_to "Medications", medications_path %>
           <%= link_to "Mental Health", mental_health_entries_path %>

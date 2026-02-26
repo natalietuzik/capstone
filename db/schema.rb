@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_26_010525) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_26_012540) do
+  create_table "journal_entries", force: :cascade do |t|
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.date "date", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_journal_entries_on_user_id"
+  end
+
   create_table "medication_logs", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.date "date"
@@ -59,6 +69,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_26_010525) do
     t.index ["user_id"], name: "index_planner_items_on_user_id"
   end
 
+  create_table "todo_items", force: :cascade do |t|
+    t.boolean "completed", default: false, null: false
+    t.datetime "created_at", null: false
+    t.text "notes"
+    t.integer "priority", default: 2, null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_todo_items_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
@@ -67,9 +88,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_26_010525) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "journal_entries", "users"
   add_foreign_key "medication_logs", "medications"
   add_foreign_key "medication_logs", "users"
   add_foreign_key "medications", "users"
   add_foreign_key "mental_health_entries", "users"
   add_foreign_key "planner_items", "users"
+  add_foreign_key "todo_items", "users"
 end

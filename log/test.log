@@ -1224,3 +1224,1054 @@ PlannerItemTest: test_completed_defaults_to_false
   [1m[36mPlannerItem Create (0.2ms)[0m  [1m[32mINSERT INTO "planner_items" ("completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["completed", 0], ["created_at", "2026-02-26 01:20:19.953096"], ["date", "2026-02-26"], ["notes", nil], ["time_of_day", nil], ["title", "Test"], ["updated_at", "2026-02-26 01:20:19.953096"], ["user_id", 1]]
   [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
   [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "journal_entries"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "journal_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "body" text, "created_at" datetime(6) NOT NULL, "date" date, "title" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_journal_entries_on_user_id" ON "journal_entries" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "medication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "medication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "date" date, "medication_id" integer NOT NULL, "notes" text, "taken" boolean DEFAULT FALSE, "time_taken" time, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_medication_id" ON "medication_logs" ("medication_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_user_id" ON "medication_logs" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "medications"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "medications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "dosage" varchar, "instructions" text, "name" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medications_on_user_id" ON "medications" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "mental_health_entries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "mental_health_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "anxiety" integer, "created_at" datetime(6) NOT NULL, "date" date, "journal" text, "mood" integer, "sleep_hours" decimal, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_mental_health_entries_on_user_id_and_date" ON "mental_health_entries" ("user_id", "date")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_mental_health_entries_on_user_id" ON "mental_health_entries" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "planner_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "planner_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "completed" boolean DEFAULT FALSE, "created_at" datetime(6) NOT NULL, "date" date, "notes" text, "time_of_day" time, "title" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_planner_items_on_user_id" ON "planner_items" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "todo_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "todo_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "completed" boolean DEFAULT FALSE NOT NULL, "created_at" datetime(6) NOT NULL, "notes" text, "priority" integer DEFAULT 2 NOT NULL, "title" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_todo_items_on_user_id" ON "todo_items" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "email" varchar, "password_digest" varchar, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ajournal_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "body" text, "created_at" datetime(6) NOT NULL, "date" date, "title" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_ajournal_entries_on_user_id" ON "ajournal_entries" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "ajournal_entries" ("id","body","created_at","date","title","updated_at","user_id")
+                     SELECT "id","body","created_at","date","title","updated_at","user_id" FROM "journal_entries"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "journal_entries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "journal_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "body" text, "created_at" datetime(6) NOT NULL, "date" date, "title" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_4ea185c6f0"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_journal_entries_on_user_id" ON "journal_entries" ("user_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "journal_entries" ("id","body","created_at","date","title","updated_at","user_id")
+                     SELECT "id","body","created_at","date","title","updated_at","user_id" FROM "ajournal_entries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "ajournal_entries"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amedication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "date" date, "medication_id" integer NOT NULL, "notes" text, "taken" boolean DEFAULT FALSE, "time_taken" time, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amedication_logs_on_user_id" ON "amedication_logs" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amedication_logs_on_medication_id" ON "amedication_logs" ("medication_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "amedication_logs" ("id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id")
+                     SELECT "id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id" FROM "medication_logs"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "medication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "medication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "date" date, "medication_id" integer NOT NULL, "notes" text, "taken" boolean DEFAULT FALSE, "time_taken" time, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_67d77b7bd2"
+FOREIGN KEY ("medication_id")
+  REFERENCES "medications" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_medication_id" ON "medication_logs" ("medication_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_user_id" ON "medication_logs" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "medication_logs" ("id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id")
+                     SELECT "id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id" FROM "amedication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "amedication_logs"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amedication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "date" date, "medication_id" integer NOT NULL, "notes" text, "taken" boolean DEFAULT FALSE, "time_taken" time, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amedication_logs_on_user_id" ON "amedication_logs" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amedication_logs_on_medication_id" ON "amedication_logs" ("medication_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "amedication_logs" ("id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id")
+                     SELECT "id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id" FROM "medication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "medication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "medication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "date" date, "medication_id" integer NOT NULL, "notes" text, "taken" boolean DEFAULT FALSE, "time_taken" time, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_67d77b7bd2"
+FOREIGN KEY ("medication_id")
+  REFERENCES "medications" ("id")
+, CONSTRAINT "fk_rails_5c0306f23a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_medication_id" ON "medication_logs" ("medication_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_user_id" ON "medication_logs" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "medication_logs" ("id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id")
+                     SELECT "id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id" FROM "amedication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "amedication_logs"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amedications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "dosage" varchar, "instructions" text, "name" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amedications_on_user_id" ON "amedications" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "amedications" ("id","created_at","dosage","instructions","name","updated_at","user_id")
+                     SELECT "id","created_at","dosage","instructions","name","updated_at","user_id" FROM "medications"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "medications"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "medications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "dosage" varchar, "instructions" text, "name" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_fc718069ca"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medications_on_user_id" ON "medications" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "medications" ("id","created_at","dosage","instructions","name","updated_at","user_id")
+                     SELECT "id","created_at","dosage","instructions","name","updated_at","user_id" FROM "amedications"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "amedications"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amental_health_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "anxiety" integer, "created_at" datetime(6) NOT NULL, "date" date, "journal" text, "mood" integer, "sleep_hours" decimal, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amental_health_entries_on_user_id" ON "amental_health_entries" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_amental_health_entries_on_user_id_and_date" ON "amental_health_entries" ("user_id", "date")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "amental_health_entries" ("id","anxiety","created_at","date","journal","mood","sleep_hours","updated_at","user_id")
+                     SELECT "id","anxiety","created_at","date","journal","mood","sleep_hours","updated_at","user_id" FROM "mental_health_entries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "mental_health_entries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "mental_health_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "anxiety" integer, "created_at" datetime(6) NOT NULL, "date" date, "journal" text, "mood" integer, "sleep_hours" decimal, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_4bee606b33"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_mental_health_entries_on_user_id_and_date" ON "mental_health_entries" ("user_id", "date")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_mental_health_entries_on_user_id" ON "mental_health_entries" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "mental_health_entries" ("id","anxiety","created_at","date","journal","mood","sleep_hours","updated_at","user_id")
+                     SELECT "id","anxiety","created_at","date","journal","mood","sleep_hours","updated_at","user_id" FROM "amental_health_entries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "amental_health_entries"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aplanner_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "completed" boolean DEFAULT FALSE, "created_at" datetime(6) NOT NULL, "date" date, "notes" text, "time_of_day" time, "title" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aplanner_items_on_user_id" ON "aplanner_items" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "aplanner_items" ("id","completed","created_at","date","notes","time_of_day","title","updated_at","user_id")
+                     SELECT "id","completed","created_at","date","notes","time_of_day","title","updated_at","user_id" FROM "planner_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "planner_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "planner_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "completed" boolean DEFAULT FALSE, "created_at" datetime(6) NOT NULL, "date" date, "notes" text, "time_of_day" time, "title" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_1eb10afb62"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_planner_items_on_user_id" ON "planner_items" ("user_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "planner_items" ("id","completed","created_at","date","notes","time_of_day","title","updated_at","user_id")
+                     SELECT "id","completed","created_at","date","notes","time_of_day","title","updated_at","user_id" FROM "aplanner_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aplanner_items"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "atodo_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "completed" boolean DEFAULT FALSE NOT NULL, "created_at" datetime(6) NOT NULL, "notes" text, "priority" integer DEFAULT 2 NOT NULL, "title" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_atodo_items_on_user_id" ON "atodo_items" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "atodo_items" ("id","completed","created_at","notes","priority","title","updated_at","user_id")
+                     SELECT "id","completed","created_at","notes","priority","title","updated_at","user_id" FROM "todo_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "todo_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "todo_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "completed" boolean DEFAULT FALSE NOT NULL, "created_at" datetime(6) NOT NULL, "notes" text, "priority" integer DEFAULT 2 NOT NULL, "title" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_d6ff5e17fe"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_todo_items_on_user_id" ON "todo_items" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todo_items" ("id","completed","created_at","notes","priority","title","updated_at","user_id")
+                     SELECT "id","completed","created_at","notes","priority","title","updated_at","user_id" FROM "atodo_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "atodo_items"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20260226012235)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20260226012234),
+(20260226010525),
+(20260226010524),
+(20260226010523),
+(20260226010522),
+(20260226010521);[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'test', '2026-02-26 01:24:48.007731', '2026-02-26 01:24:48.007733') RETURNING "key"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', '29040aff0181b61ee744af5a2a908c51e8f657f8', '2026-02-26 01:24:48.008508', '2026-02-26 01:24:48.008509') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.1ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_key_check[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------
+TodoItemTest: test_priority_must_be_1,_2,_or_3
+----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.057698"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.057698"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------
+TodoItemTest: test_belongs_to_user
+----------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.064225"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.064225"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------------
+TodoItemTest: test_pending_scope_returns_only_incomplete_items
+--------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.066852"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.066852"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mTodoItem Create (0.2ms)[0m  [1m[32mINSERT INTO "todo_items" ("completed", "created_at", "notes", "priority", "title", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["completed", 1], ["created_at", "2026-02-26 01:24:48.067819"], ["notes", nil], ["priority", 2], ["title", "Done task"], ["updated_at", "2026-02-26 01:24:48.067819"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mTodoItem Create (0.2ms)[0m  [1m[32mINSERT INTO "todo_items" ("completed", "created_at", "notes", "priority", "title", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["completed", 0], ["created_at", "2026-02-26 01:24:48.068680"], ["notes", nil], ["priority", 2], ["title", "Pending task"], ["updated_at", "2026-02-26 01:24:48.068680"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTodoItem Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "todo_items" WHERE "todo_items"."completed" = ? AND "todo_items"."id" = ? LIMIT ?[0m  [["completed", 0], ["id", 2], ["LIMIT", 1]]
+  [1m[36mTodoItem Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "todo_items" WHERE "todo_items"."completed" = ? AND "todo_items"."id" = ? LIMIT ?[0m  [["completed", 0], ["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------
+TodoItemTest: test_title_must_be_present
+----------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.072248"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.072248"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------
+TodoItemTest: test_valid_todo_item
+----------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.074904"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.074904"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------
+TodoItemTest: test_completed_defaults_to_false
+----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.077519"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.077519"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mTodoItem Create (0.2ms)[0m  [1m[32mINSERT INTO "todo_items" ("completed", "created_at", "notes", "priority", "title", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["completed", 0], ["created_at", "2026-02-26 01:24:48.078391"], ["notes", nil], ["priority", 1], ["title", "Test task"], ["updated_at", "2026-02-26 01:24:48.078391"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------
+TodoItemTest: test_notes_are_optional
+-------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.081025"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.081025"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------
+JournalEntryTest: test_belongs_to_user
+--------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.083893"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.083893"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------------
+JournalEntryTest: test_ordered_scope_sorts_by_date_descending
+-------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.088938"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.088938"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mJournalEntry Create (0.2ms)[0m  [1m[32mINSERT INTO "journal_entries" ("body", "created_at", "date", "title", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["body", nil], ["created_at", "2026-02-26 01:24:48.089777"], ["date", "2026-02-21"], ["title", "Old Entry"], ["updated_at", "2026-02-26 01:24:48.089777"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mJournalEntry Create (0.2ms)[0m  [1m[32mINSERT INTO "journal_entries" ("body", "created_at", "date", "title", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["body", nil], ["created_at", "2026-02-26 01:24:48.090626"], ["date", "2026-02-26"], ["title", "New Entry"], ["updated_at", "2026-02-26 01:24:48.090626"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mJournalEntry Load (0.1ms)[0m  [1m[34mSELECT "journal_entries".* FROM "journal_entries" ORDER BY "journal_entries"."date" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------
+JournalEntryTest: test_title_must_be_present
+--------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.093908"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.093908"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------
+JournalEntryTest: test_valid_journal_entry
+------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.096593"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.096593"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------
+JournalEntryTest: test_body_is_optional
+---------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.099313"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.099313"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------
+JournalEntryTest: test_date_must_be_present
+-------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.101948"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.101948"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------
+MentalHealthEntryTest: test_mood_must_be_present
+------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.104696"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.104696"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------
+MentalHealthEntryTest: test_anxiety_must_be_between_1_and_10
+------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.111082"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.111082"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE MentalHealthEntry Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE MentalHealthEntry Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------------
+MentalHealthEntryTest: test_mood_must_be_between_1_and_10
+---------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.114995"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.114995"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE MentalHealthEntry Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE MentalHealthEntry Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------
+MentalHealthEntryTest: test_one_entry_per_user_per_date
+-------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.118911"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.118911"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mMentalHealthEntry Create (0.1ms)[0m  [1m[32mINSERT INTO "mental_health_entries" ("anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["anxiety", 4], ["created_at", "2026-02-26 01:24:48.120124"], ["date", "2026-02-26"], ["journal", nil], ["mood", 7], ["sleep_hours", nil], ["updated_at", "2026-02-26 01:24:48.120124"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------
+MentalHealthEntryTest: test_valid_entry
+---------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.123381"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.123381"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------
+MentalHealthEntryTest: test_anxiety_must_be_present
+---------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.126439"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.126439"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------
+MentalHealthEntryTest: test_date_must_be_present
+------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.129660"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.129660"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" IS NULL AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------
+UserTest: test_email_must_be_present
+------------------------------------
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------
+UserTest: test_has_secure_password
+----------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.134929"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.134929"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------
+UserTest: test_password_must_be_at_least_6_characters
+-----------------------------------------------------
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------
+UserTest: test_valid_user
+-------------------------
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------
+UserTest: test_email_must_be_unique
+-----------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.144479"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.144479"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------
+UserTest: test_email_uniqueness_is_case_insensitive
+---------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.148461"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.148461"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------
+PlannerItemTest: test_belongs_to_user
+-------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.152693"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.152693"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------
+PlannerItemTest: test_title_must_be_present
+-------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.158126"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.158126"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------
+PlannerItemTest: test_valid_planner_item
+----------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.160846"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.160846"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------
+PlannerItemTest: test_completed_defaults_to_false
+-------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.163660"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.163660"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPlannerItem Create (0.2ms)[0m  [1m[32mINSERT INTO "planner_items" ("completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["completed", 0], ["created_at", "2026-02-26 01:24:48.164443"], ["date", "2026-02-26"], ["notes", nil], ["time_of_day", nil], ["title", "Test"], ["updated_at", "2026-02-26 01:24:48.164443"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------
+PlannerItemTest: test_date_must_be_present
+------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:24:48.167378"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:24:48.167378"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "journal_entries"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "journal_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "body" text, "created_at" datetime(6) NOT NULL, "date" date NOT NULL, "title" varchar NOT NULL, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_journal_entries_on_user_id" ON "journal_entries" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "medication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "medication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "date" date, "medication_id" integer NOT NULL, "notes" text, "taken" boolean DEFAULT FALSE, "time_taken" time, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_medication_id" ON "medication_logs" ("medication_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_user_id" ON "medication_logs" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "medications"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "medications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "dosage" varchar, "instructions" text, "name" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medications_on_user_id" ON "medications" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "mental_health_entries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "mental_health_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "anxiety" integer, "created_at" datetime(6) NOT NULL, "date" date, "journal" text, "mood" integer, "sleep_hours" decimal, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_mental_health_entries_on_user_id_and_date" ON "mental_health_entries" ("user_id", "date")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_mental_health_entries_on_user_id" ON "mental_health_entries" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "planner_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "planner_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "completed" boolean DEFAULT FALSE, "created_at" datetime(6) NOT NULL, "date" date, "notes" text, "time_of_day" time, "title" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_planner_items_on_user_id" ON "planner_items" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "todo_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "todo_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "completed" boolean DEFAULT FALSE NOT NULL, "created_at" datetime(6) NOT NULL, "notes" text, "priority" integer DEFAULT 2 NOT NULL, "title" varchar NOT NULL, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_todo_items_on_user_id" ON "todo_items" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "email" varchar, "password_digest" varchar, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ajournal_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "body" text, "created_at" datetime(6) NOT NULL, "date" date NOT NULL, "title" varchar NOT NULL, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_ajournal_entries_on_user_id" ON "ajournal_entries" ("user_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "ajournal_entries" ("id","body","created_at","date","title","updated_at","user_id")
+                     SELECT "id","body","created_at","date","title","updated_at","user_id" FROM "journal_entries"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "journal_entries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "journal_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "body" text, "created_at" datetime(6) NOT NULL, "date" date NOT NULL, "title" varchar NOT NULL, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_4ea185c6f0"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_journal_entries_on_user_id" ON "journal_entries" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "journal_entries" ("id","body","created_at","date","title","updated_at","user_id")
+                     SELECT "id","body","created_at","date","title","updated_at","user_id" FROM "ajournal_entries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "ajournal_entries"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amedication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "date" date, "medication_id" integer NOT NULL, "notes" text, "taken" boolean DEFAULT FALSE, "time_taken" time, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amedication_logs_on_user_id" ON "amedication_logs" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amedication_logs_on_medication_id" ON "amedication_logs" ("medication_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "amedication_logs" ("id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id")
+                     SELECT "id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id" FROM "medication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "medication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "medication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "date" date, "medication_id" integer NOT NULL, "notes" text, "taken" boolean DEFAULT FALSE, "time_taken" time, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_67d77b7bd2"
+FOREIGN KEY ("medication_id")
+  REFERENCES "medications" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_medication_id" ON "medication_logs" ("medication_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_user_id" ON "medication_logs" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "medication_logs" ("id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id")
+                     SELECT "id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id" FROM "amedication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "amedication_logs"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amedication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "date" date, "medication_id" integer NOT NULL, "notes" text, "taken" boolean DEFAULT FALSE, "time_taken" time, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amedication_logs_on_user_id" ON "amedication_logs" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amedication_logs_on_medication_id" ON "amedication_logs" ("medication_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "amedication_logs" ("id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id")
+                     SELECT "id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id" FROM "medication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "medication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "medication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "date" date, "medication_id" integer NOT NULL, "notes" text, "taken" boolean DEFAULT FALSE, "time_taken" time, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_67d77b7bd2"
+FOREIGN KEY ("medication_id")
+  REFERENCES "medications" ("id")
+, CONSTRAINT "fk_rails_5c0306f23a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_medication_id" ON "medication_logs" ("medication_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_user_id" ON "medication_logs" ("user_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "medication_logs" ("id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id")
+                     SELECT "id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id" FROM "amedication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "amedication_logs"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amedications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "dosage" varchar, "instructions" text, "name" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amedications_on_user_id" ON "amedications" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "amedications" ("id","created_at","dosage","instructions","name","updated_at","user_id")
+                     SELECT "id","created_at","dosage","instructions","name","updated_at","user_id" FROM "medications"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "medications"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "medications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "dosage" varchar, "instructions" text, "name" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_fc718069ca"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medications_on_user_id" ON "medications" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "medications" ("id","created_at","dosage","instructions","name","updated_at","user_id")
+                     SELECT "id","created_at","dosage","instructions","name","updated_at","user_id" FROM "amedications"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "amedications"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amental_health_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "anxiety" integer, "created_at" datetime(6) NOT NULL, "date" date, "journal" text, "mood" integer, "sleep_hours" decimal, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amental_health_entries_on_user_id" ON "amental_health_entries" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_amental_health_entries_on_user_id_and_date" ON "amental_health_entries" ("user_id", "date")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "amental_health_entries" ("id","anxiety","created_at","date","journal","mood","sleep_hours","updated_at","user_id")
+                     SELECT "id","anxiety","created_at","date","journal","mood","sleep_hours","updated_at","user_id" FROM "mental_health_entries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "mental_health_entries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "mental_health_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "anxiety" integer, "created_at" datetime(6) NOT NULL, "date" date, "journal" text, "mood" integer, "sleep_hours" decimal, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_4bee606b33"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_mental_health_entries_on_user_id_and_date" ON "mental_health_entries" ("user_id", "date")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_mental_health_entries_on_user_id" ON "mental_health_entries" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "mental_health_entries" ("id","anxiety","created_at","date","journal","mood","sleep_hours","updated_at","user_id")
+                     SELECT "id","anxiety","created_at","date","journal","mood","sleep_hours","updated_at","user_id" FROM "amental_health_entries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "amental_health_entries"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aplanner_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "completed" boolean DEFAULT FALSE, "created_at" datetime(6) NOT NULL, "date" date, "notes" text, "time_of_day" time, "title" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aplanner_items_on_user_id" ON "aplanner_items" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "aplanner_items" ("id","completed","created_at","date","notes","time_of_day","title","updated_at","user_id")
+                     SELECT "id","completed","created_at","date","notes","time_of_day","title","updated_at","user_id" FROM "planner_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "planner_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "planner_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "completed" boolean DEFAULT FALSE, "created_at" datetime(6) NOT NULL, "date" date, "notes" text, "time_of_day" time, "title" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_1eb10afb62"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_planner_items_on_user_id" ON "planner_items" ("user_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "planner_items" ("id","completed","created_at","date","notes","time_of_day","title","updated_at","user_id")
+                     SELECT "id","completed","created_at","date","notes","time_of_day","title","updated_at","user_id" FROM "aplanner_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aplanner_items"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "atodo_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "completed" boolean DEFAULT FALSE NOT NULL, "created_at" datetime(6) NOT NULL, "notes" text, "priority" integer DEFAULT 2 NOT NULL, "title" varchar NOT NULL, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_atodo_items_on_user_id" ON "atodo_items" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "atodo_items" ("id","completed","created_at","notes","priority","title","updated_at","user_id")
+                     SELECT "id","completed","created_at","notes","priority","title","updated_at","user_id" FROM "todo_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "todo_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "todo_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "completed" boolean DEFAULT FALSE NOT NULL, "created_at" datetime(6) NOT NULL, "notes" text, "priority" integer DEFAULT 2 NOT NULL, "title" varchar NOT NULL, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_d6ff5e17fe"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_todo_items_on_user_id" ON "todo_items" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "todo_items" ("id","completed","created_at","notes","priority","title","updated_at","user_id")
+                     SELECT "id","completed","created_at","notes","priority","title","updated_at","user_id" FROM "atodo_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "atodo_items"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20260226012540)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20260226012235),
+(20260226012234),
+(20260226010525),
+(20260226010524),
+(20260226010523),
+(20260226010522),
+(20260226010521);[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'test', '2026-02-26 01:26:01.206642', '2026-02-26 01:26:01.206644') RETURNING "key"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'aac8a7ffbbf9003d91c11ea36bfc13d747eae729', '2026-02-26 01:26:01.207829', '2026-02-26 01:26:01.207831') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.3ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.1ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_key_check[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------
+UserTest: test_valid_user
+-------------------------
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------
+UserTest: test_email_must_be_unique
+-----------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.258438"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.258438"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------
+UserTest: test_has_secure_password
+----------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.263296"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.263296"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------
+UserTest: test_email_uniqueness_is_case_insensitive
+---------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.268066"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.268066"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------
+UserTest: test_password_must_be_at_least_6_characters
+-----------------------------------------------------
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------
+UserTest: test_email_must_be_present
+------------------------------------
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------
+PlannerItemTest: test_title_must_be_present
+-------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.277791"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.277791"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------
+PlannerItemTest: test_completed_defaults_to_false
+-------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.284224"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.284224"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPlannerItem Create (0.2ms)[0m  [1m[32mINSERT INTO "planner_items" ("completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["completed", 0], ["created_at", "2026-02-26 01:26:01.285068"], ["date", "2026-02-26"], ["notes", nil], ["time_of_day", nil], ["title", "Test"], ["updated_at", "2026-02-26 01:26:01.285068"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------
+PlannerItemTest: test_date_must_be_present
+------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.287953"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.287953"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------
+PlannerItemTest: test_valid_planner_item
+----------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.290872"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.290872"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------
+PlannerItemTest: test_belongs_to_user
+-------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.293603"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.293603"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------
+JournalEntryTest: test_valid_journal_entry
+------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.296528"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.296528"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------
+JournalEntryTest: test_body_is_optional
+---------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.301791"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.301791"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------------
+JournalEntryTest: test_ordered_scope_sorts_by_date_descending
+-------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.304528"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.304528"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mJournalEntry Create (0.2ms)[0m  [1m[32mINSERT INTO "journal_entries" ("body", "created_at", "date", "title", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["body", nil], ["created_at", "2026-02-26 01:26:01.305324"], ["date", "2026-02-21"], ["title", "Old Entry"], ["updated_at", "2026-02-26 01:26:01.305324"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mJournalEntry Create (0.4ms)[0m  [1m[32mINSERT INTO "journal_entries" ("body", "created_at", "date", "title", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["body", nil], ["created_at", "2026-02-26 01:26:01.306159"], ["date", "2026-02-26"], ["title", "New Entry"], ["updated_at", "2026-02-26 01:26:01.306159"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mJournalEntry Load (0.1ms)[0m  [1m[34mSELECT "journal_entries".* FROM "journal_entries" ORDER BY "journal_entries"."date" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------
+JournalEntryTest: test_date_must_be_present
+-------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.309641"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.309641"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------
+JournalEntryTest: test_title_must_be_present
+--------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.312382"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.312382"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------
+JournalEntryTest: test_belongs_to_user
+--------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.315336"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.315336"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------
+TodoItemTest: test_valid_todo_item
+----------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.318137"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.318137"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------
+TodoItemTest: test_completed_defaults_to_false
+----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.323668"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.323668"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mTodoItem Create (0.2ms)[0m  [1m[32mINSERT INTO "todo_items" ("completed", "created_at", "notes", "priority", "title", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["completed", 0], ["created_at", "2026-02-26 01:26:01.324455"], ["notes", nil], ["priority", 1], ["title", "Test task"], ["updated_at", "2026-02-26 01:26:01.324455"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------
+TodoItemTest: test_title_must_be_present
+----------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.327266"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.327266"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+--------------------------------------------------------------
+TodoItemTest: test_pending_scope_returns_only_incomplete_items
+--------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.330173"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.330173"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mTodoItem Create (0.2ms)[0m  [1m[32mINSERT INTO "todo_items" ("completed", "created_at", "notes", "priority", "title", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["completed", 1], ["created_at", "2026-02-26 01:26:01.330940"], ["notes", nil], ["priority", 2], ["title", "Done task"], ["updated_at", "2026-02-26 01:26:01.330940"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mTodoItem Create (0.1ms)[0m  [1m[32mINSERT INTO "todo_items" ("completed", "created_at", "notes", "priority", "title", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["completed", 0], ["created_at", "2026-02-26 01:26:01.331726"], ["notes", nil], ["priority", 2], ["title", "Pending task"], ["updated_at", "2026-02-26 01:26:01.331726"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTodoItem Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "todo_items" WHERE "todo_items"."completed" = ? AND "todo_items"."id" = ? LIMIT ?[0m  [["completed", 0], ["id", 2], ["LIMIT", 1]]
+  [1m[36mTodoItem Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "todo_items" WHERE "todo_items"."completed" = ? AND "todo_items"."id" = ? LIMIT ?[0m  [["completed", 0], ["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------
+TodoItemTest: test_notes_are_optional
+-------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.335336"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.335336"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------------
+TodoItemTest: test_priority_must_be_1,_2,_or_3
+----------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.338088"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.338088"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------
+TodoItemTest: test_belongs_to_user
+----------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.340847"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.340847"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------
+MentalHealthEntryTest: test_valid_entry
+---------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.343854"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.343854"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------
+MentalHealthEntryTest: test_anxiety_must_be_present
+---------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.350776"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.350776"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------
+MentalHealthEntryTest: test_one_entry_per_user_per_date
+-------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.354416"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.354416"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mMentalHealthEntry Create (0.1ms)[0m  [1m[32mINSERT INTO "mental_health_entries" ("anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["anxiety", 4], ["created_at", "2026-02-26 01:26:01.355707"], ["date", "2026-02-26"], ["journal", nil], ["mood", 7], ["sleep_hours", nil], ["updated_at", "2026-02-26 01:26:01.355707"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------------
+MentalHealthEntryTest: test_mood_must_be_between_1_and_10
+---------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.358910"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.358910"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE MentalHealthEntry Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE MentalHealthEntry Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------
+MentalHealthEntryTest: test_date_must_be_present
+------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.369382"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.369382"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" IS NULL AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------
+MentalHealthEntryTest: test_mood_must_be_present
+------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (2.5ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.380609"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.380609"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------
+MentalHealthEntryTest: test_anxiety_must_be_between_1_and_10
+------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:26:01.393690"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:26:01.393690"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE MentalHealthEntry Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE MentalHealthEntry Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
