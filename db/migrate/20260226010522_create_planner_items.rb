@@ -1,4 +1,4 @@
-class CreatePlannerItems < ActiveRecord::Migration[8.1]
+class CreatePlannerItems < ActiveRecord::Migration[8.0]
   def change
     create_table :planner_items do |t|
       t.references :user, null: false, foreign_key: true

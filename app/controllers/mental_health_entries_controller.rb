@@ -1,6 +1,6 @@
 class MentalHealthEntriesController < ApplicationController
   before_action :require_login
-  before_action :set_entry, only: [:show, :edit, :update, :destroy]
+  before_action :set_entry, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @entries = current_user.mental_health_entries.order(date: :desc)

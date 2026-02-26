@@ -1,6 +1,6 @@
 class JournalEntriesController < ApplicationController
   before_action :require_login
-  before_action :set_entry, only: [:show, :edit, :update, :destroy]
+  before_action :set_entry, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @journal_entries = current_user.journal_entries.ordered
