@@ -25,7 +25,7 @@
           <%= link_to "Edit", edit_planner_item_path(item), class: "btn btn-sm btn-secondary" %>
           <%= link_to "Delete", planner_item_path(item), data: { turbo_method: :delete, turbo_confirm: "Delete this task?" }, class: "btn btn-sm btn-danger" %>
           <% unless item.completed %>
-            <%= link_to "✓ Mark Done", planner_item_path(item, planner_item: { completed: true }), data: { turbo_method: :patch }, class: "btn btn-sm btn-success" %>
+            <%= button_to "✓ Mark Done", planner_item_path(item), method: :patch, params: { planner_item: { completed: true } }, class: "btn btn-sm btn-success", form: { style: "display: inline" } %>
           <% end %>
         </div>
       </div>
@@ -65,7 +65,7 @@
           <% end %>
           <div class="item-actions">
             <%= link_to "Edit", edit_todo_item_path(item), class: "btn btn-sm btn-secondary" %>
-            <%= link_to "✓ Done", todo_item_path(item, todo_item: { completed: true }), data: { turbo_method: :patch }, class: "btn btn-sm btn-success" %>
+            <%= button_to "✓ Done", todo_item_path(item), method: :patch, params: { todo_item: { completed: true } }, class: "btn btn-sm btn-success", form: { style: "display: inline" } %>
             <%= link_to "Delete", todo_item_path(item), data: { turbo_method: :delete, turbo_confirm: "Delete this item?" }, class: "btn btn-sm btn-danger" %>
           </div>
         </div>
@@ -83,7 +83,7 @@
             <span class="badge badge-success">✓ Done</span>
           </div>
           <div class="item-actions">
-            <%= link_to "Reopen", todo_item_path(item, todo_item: { completed: false }), data: { turbo_method: :patch }, class: "btn btn-sm btn-secondary" %>
+            <%= button_to "Reopen", todo_item_path(item), method: :patch, params: { todo_item: { completed: false } }, class: "btn btn-sm btn-secondary", form: { style: "display: inline" } %>
             <%= link_to "Delete", todo_item_path(item), data: { turbo_method: :delete, turbo_confirm: "Delete this item?" }, class: "btn btn-sm btn-danger" %>
           </div>
         </div>
