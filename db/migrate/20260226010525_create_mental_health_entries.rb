@@ -1,4 +1,4 @@
-class CreateMentalHealthEntries < ActiveRecord::Migration[8.1]
+class CreateMentalHealthEntries < ActiveRecord::Migration[8.0]
   def change
     create_table :mental_health_entries do |t|
       t.references :user, null: false, foreign_key: true
@@ -10,6 +10,6 @@ class CreateMentalHealthEntries < ActiveRecord::Migration[8.1]
 
       t.timestamps
     end
-    add_index :mental_health_entries, [:user_id, :date], unique: true
+    add_index :mental_health_entries, [ :user_id, :date ], unique: true
   end
 end

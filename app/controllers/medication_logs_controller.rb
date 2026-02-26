@@ -1,7 +1,7 @@
 class MedicationLogsController < ApplicationController
   before_action :require_login
-  before_action :set_medication, only: [:new, :create]
-  before_action :set_medication_log, only: [:show, :edit, :update, :destroy]
+  before_action :set_medication, only: [ :new, :create ]
+  before_action :set_medication_log, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @date = params[:date] ? Date.parse(params[:date]) : Date.today
