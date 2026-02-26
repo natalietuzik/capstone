@@ -42,10 +42,10 @@ jobs:
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
         run: |
-          if bundle show importmap-rails > /dev/null 2>&1; then
+          if bin/rails --help | grep -q "importmap:audit"; then
             bin/rails importmap:audit
           else
-            echo "Importmap not detected; skipping importmap audit."
+            echo "importmap:audit not available; skipping."
           fi
 
   lint:
