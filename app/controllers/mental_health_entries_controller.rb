@@ -4,6 +4,8 @@ class MentalHealthEntriesController < ApplicationController
 
   def index
     @entries = current_user.mental_health_entries.order(date: :desc)
+    @medications = current_user.medications.order(:name)
+    @journal_entries = current_user.journal_entries.ordered
   end
 
   def show

@@ -1,6 +1,6 @@
 <div class="page-header">
-  <h1>🧠 Mental Health Log</h1>
-  <%= link_to "+ New Entry", new_mental_health_entry_path, class: "btn btn-primary" %>
+  <h1>🧠 Mental Health</h1>
+  <%= link_to "+ Log Entry", new_mental_health_entry_path, class: "btn btn-primary" %>
 </div>
 
 <% if @entries.any? %>
@@ -30,5 +30,73 @@
   <div class="empty-state-box">
     <p>No mental health entries yet.</p>
     <%= link_to "+ Add Today's Entry", new_mental_health_entry_path, class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<hr class="section-divider">
+
+<div class="section-header">
+  <h2>💊 Medications</h2>
+  <%= link_to "+ Add Medication", new_medication_path, class: "btn btn-primary" %>
+</div>
+
+<% if @medications.any? %>
+  <div class="items-list">
+    <% @medications.each do |med| %>
+      <div class="item-card">
+        <div class="item-header">
+          <h3><%= med.name %></h3>
+          <% if med.dosage.present? %>
+            <span class="badge badge-info"><%= med.dosage %></span>
+          <% end %>
+        </div>
+        <% if med.instructions.present? %>
+          <p class="item-notes"><%= med.instructions %></p>
+        <% end %>
+        <div class="item-actions">
+          <%= link_to "View Logs", medication_path(med), class: "btn btn-sm btn-secondary" %>
+          <%= link_to "Edit", edit_medication_path(med), class: "btn btn-sm btn-secondary" %>
+          <%= link_to "Delete", medication_path(med), data: { turbo_method: :delete, turbo_confirm: "Delete this medication?" }, class: "btn btn-sm btn-danger" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="empty-state-box">
+    <p>No medications tracked yet.</p>
+    <%= link_to "+ Add Medication", new_medication_path, class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<hr class="section-divider">
+
+<div class="section-header">
+  <h2>📓 Journal</h2>
+  <%= link_to "+ New Entry", new_journal_entry_path, class: "btn btn-primary" %>
+</div>
+
+<% if @journal_entries.any? %>
+  <div class="items-list">
+    <% @journal_entries.each do |entry| %>
+      <div class="item-card">
+        <div class="item-header">
+          <h3><%= link_to entry.title, journal_entry_path(entry) %></h3>
+          <span class="time-badge"><%= entry.date.strftime("%B %d, %Y") %></span>
+        </div>
+        <% if entry.body.present? %>
+          <p class="item-notes"><%= truncate(entry.body, length: 120) %></p>
+        <% end %>
+        <div class="item-actions">
+          <%= link_to "Read", journal_entry_path(entry), class: "btn btn-sm btn-secondary" %>
+          <%= link_to "Edit", edit_journal_entry_path(entry), class: "btn btn-sm btn-secondary" %>
+          <%= link_to "Delete", journal_entry_path(entry), data: { turbo_method: :delete, turbo_confirm: "Delete this entry?" }, class: "btn btn-sm btn-danger" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="empty-state-box">
+    <p>No journal entries yet. Start writing!</p>
+    <%= link_to "+ New Entry", new_journal_entry_path, class: "btn btn-primary" %>
   </div>
 <% end %>

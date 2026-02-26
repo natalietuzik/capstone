@@ -23,5 +23,8 @@ module Capstone
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Use solid_queue for background jobs
+    config.active_job.queue_adapter = :solid_queue
   end
 end
