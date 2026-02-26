@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: capstone
+    env: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    disk:
+      name: storage
+      mountPath: /opt/render/project/src/storage
+      sizeGB: 1
+    envVars:
+      - key: RAILS_MASTER_KEY
+        sync: false
+        # Set this manually in the Render dashboard to the value from config/master.key
