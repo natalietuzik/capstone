@@ -1,0 +1,53 @@
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2026-02-26 01:10:32.982024', '2026-02-26 01:10:32.982026') RETURNING "key" /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Capstone'*/[0m
+Migrating to CreateUsers (20260226010521)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Capstone'*/[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "password_digest" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email") /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260226010521') RETURNING "version" /*application='Capstone'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Capstone'*/[0m
+Migrating to CreatePlannerItems (20260226010522)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Capstone'*/[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "planner_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "date" date, "time_of_day" time, "title" varchar, "notes" text, "completed" boolean DEFAULT FALSE, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_1eb10afb62"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_planner_items_on_user_id" ON "planner_items" ("user_id") /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260226010522') RETURNING "version" /*application='Capstone'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Capstone'*/[0m
+Migrating to CreateMedications (20260226010523)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Capstone'*/[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "medications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "name" varchar, "dosage" varchar, "instructions" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_fc718069ca"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medications_on_user_id" ON "medications" ("user_id") /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260226010523') RETURNING "version" /*application='Capstone'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Capstone'*/[0m
+Migrating to CreateMedicationLogs (20260226010524)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Capstone'*/[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "medication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "medication_id" integer NOT NULL, "date" date, "taken" boolean DEFAULT FALSE, "time_taken" time, "notes" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_5c0306f23a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_67d77b7bd2"
+FOREIGN KEY ("medication_id")
+  REFERENCES "medications" ("id")
+) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_user_id" ON "medication_logs" ("user_id") /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_medication_id" ON "medication_logs" ("medication_id") /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260226010524') RETURNING "version" /*application='Capstone'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Capstone'*/[0m
+Migrating to CreateMentalHealthEntries (20260226010525)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Capstone'*/[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "mental_health_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "date" date, "mood" integer, "anxiety" integer, "sleep_hours" decimal, "journal" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_4bee606b33"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+) /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_mental_health_entries_on_user_id" ON "mental_health_entries" ("user_id") /*application='Capstone'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_mental_health_entries_on_user_id_and_date" ON "mental_health_entries" ("user_id", "date") /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260226010525') RETURNING "version" /*application='Capstone'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Capstone'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Capstone'*/[0m

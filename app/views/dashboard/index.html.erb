@@ -1,0 +1,81 @@
+<div class="dashboard">
+  <h1>Welcome back! 👋</h1>
+  <p class="date-display">Today is <%= @today.strftime("%A, %B %d, %Y") %></p>
+
+  <div class="dashboard-grid">
+    <div class="card">
+      <h2>📋 Today's Tasks</h2>
+      <% if @todays_tasks.any? %>
+        <ul class="task-list">
+          <% @todays_tasks.each do |item| %>
+            <li class="<%= 'completed' if item.completed %>">
+              <%= item.title %>
+              <% if item.time_of_day %>
+                <span class="time-badge"><%= item.time_of_day.strftime("%I:%M %p") %></span>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="empty-state">No tasks for today.</p>
+      <% end %>
+      <%= link_to "+ Add Task", new_planner_item_path, class: "btn btn-secondary" %>
+    </div>
+
+    <div class="card">
+      <h2>💊 Medications</h2>
+      <% if @medications.any? %>
+        <ul class="med-list">
+          <% @medications.each do |med| %>
+            <% log = @todays_med_logs.find { |l| l.medication_id == med.id } %>
+            <li>
+              <%= med.name %>
+              <span class="badge <%= log&.taken ? 'badge-success' : 'badge-pending' %>">
+                <%= log&.taken ? "✓ Taken" : "Pending" %>
+              </span>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="empty-state">No medications tracked yet.</p>
+      <% end %>
+      <%= link_to "Manage Medications", medications_path, class: "btn btn-secondary" %>
+    </div>
+
+    <div class="card">
+      <h2>🧠 Mental Health Today</h2>
+      <% if @todays_mental_health %>
+        <div class="health-stats">
+          <div class="stat">
+            <span class="stat-label">Mood</span>
+            <span class="stat-value"><%= @todays_mental_health.mood %>/10</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Anxiety</span>
+            <span class="stat-value"><%= @todays_mental_health.anxiety %>/10</span>
+          </div>
+          <% if @todays_mental_health.sleep_hours %>
+          <div class="stat">
+            <span class="stat-label">Sleep</span>
+            <span class="stat-value"><%= @todays_mental_health.sleep_hours %>h</span>
+          </div>
+          <% end %>
+        </div>
+        <%= link_to "Edit Entry", edit_mental_health_entry_path(@todays_mental_health), class: "btn btn-secondary" %>
+      <% else %>
+        <p class="empty-state">No entry for today.</p>
+        <%= link_to "+ Log Today's Entry", new_mental_health_entry_path, class: "btn btn-secondary" %>
+      <% end %>
+    </div>
+
+    <div class="card">
+      <h2>🔗 Quick Links</h2>
+      <ul class="quick-links">
+        <li><%= link_to "📅 View Calendar", calendar_path %></li>
+        <li><%= link_to "📋 Manage Planner", planner_items_path %></li>
+        <li><%= link_to "💊 Medications", medications_path %></li>
+        <li><%= link_to "🧠 Mental Health Log", mental_health_entries_path %></li>
+      </ul>
+    </div>
+  </div>
+</div>

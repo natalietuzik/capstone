@@ -1,0 +1,30 @@
+<%= form_with model: planner_item, class: "form-card" do |f| %>
+  <% if planner_item.errors.any? %>
+    <div class="error-messages">
+      <% planner_item.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control", required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :date %>
+    <%= f.date_field :date, class: "form-control", required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :time_of_day, "Time (optional)" %>
+    <%= f.time_field :time_of_day, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :notes %>
+    <%= f.text_area :notes, class: "form-control", rows: 3 %>
+  </div>
+  <div class="form-group form-check">
+    <%= f.check_box :completed, class: "form-check-input" %>
+    <%= f.label :completed, "Mark as completed", class: "form-check-label" %>
+  </div>
+  <%= f.submit "Save Task", class: "btn btn-primary" %>
+<% end %>

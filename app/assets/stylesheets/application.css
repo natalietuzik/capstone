@@ -1,0 +1,611 @@
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ */
+
+/* Daily Wellness App Styles */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f0f4f8;
+  color: #2d3748;
+  line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #2b6cb0;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.nav-brand a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 1rem;
+  font-size: 0.95rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.nav-links a:hover {
+  background-color: rgba(255,255,255,0.2);
+}
+
+/* Container */
+.container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* Flash messages */
+.flash-messages {
+  max-width: 1100px;
+  margin: 1rem auto 0;
+  padding: 0 1.5rem;
+}
+
+.flash {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.flash-notice {
+  background-color: #c6f6d5;
+  color: #276749;
+  border: 1px solid #9ae6b4;
+}
+
+.flash-alert {
+  background-color: #fed7d7;
+  color: #9b2c2c;
+  border: 1px solid #fc8181;
+}
+
+/* Auth */
+.auth-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.auth-container h1 {
+  margin-bottom: 1.5rem;
+  color: #2b6cb0;
+}
+
+.auth-link {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Forms */
+.form-page {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-page h1 {
+  margin-bottom: 1.5rem;
+  color: #2b6cb0;
+}
+
+.form-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #4a5568;
+  font-size: 0.9rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+  background-color: #fff;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66,153,225,0.15);
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-check-input {
+  width: auto;
+}
+
+.form-check-label {
+  font-weight: normal;
+}
+
+.error-messages {
+  background-color: #fff5f5;
+  border: 1px solid #fc8181;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  color: #9b2c2c;
+  font-size: 0.9rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background-color: #3182ce;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2b6cb0;
+}
+
+.btn-secondary {
+  background-color: #edf2f7;
+  color: #4a5568;
+  border: 1px solid #cbd5e0;
+}
+
+.btn-secondary:hover {
+  background-color: #e2e8f0;
+}
+
+.btn-success {
+  background-color: #48bb78;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #fc8181;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #f56565;
+}
+
+.btn-sm {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.85rem;
+}
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  margin-bottom: 1rem;
+}
+
+.card h2, .card h3 {
+  color: #2b6cb0;
+  margin-bottom: 1rem;
+}
+
+/* Dashboard */
+.dashboard h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: #2d3748;
+}
+
+.date-display {
+  color: #718096;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Lists */
+.task-list, .med-list, .quick-links {
+  list-style: none;
+  padding: 0;
+}
+
+.task-list li, .med-list li {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #edf2f7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.task-list li.completed {
+  text-decoration: line-through;
+  color: #a0aec0;
+}
+
+.quick-links li {
+  padding: 0.4rem 0;
+}
+
+.quick-links a {
+  color: #3182ce;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.quick-links a:hover {
+  text-decoration: underline;
+}
+
+/* Page headers */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.page-header h1 {
+  color: #2d3748;
+}
+
+.date-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.current-date {
+  font-weight: 600;
+  color: #4a5568;
+  min-width: 200px;
+  text-align: center;
+}
+
+/* Item cards */
+.item-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  margin-bottom: 0.8rem;
+  border-left: 4px solid #4299e1;
+}
+
+.item-card.item-completed {
+  border-left-color: #68d391;
+  opacity: 0.8;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.item-header h3 {
+  color: #2d3748;
+  font-size: 1.05rem;
+}
+
+.item-notes {
+  color: #718096;
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+
+.item-actions {
+  margin-top: 0.5rem;
+}
+
+/* Badges */
+.badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge-success { background-color: #c6f6d5; color: #276749; }
+.badge-pending { background-color: #fefcbf; color: #744210; }
+.badge-info { background-color: #bee3f8; color: #2b6cb0; }
+
+.time-badge {
+  background-color: #ebf8ff;
+  color: #2b6cb0;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+/* Health stats */
+.health-stats {
+  display: flex;
+  gap: 1.5rem;
+  margin: 0.5rem 0;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2b6cb0;
+}
+
+/* Empty states */
+.empty-state {
+  color: #a0aec0;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.empty-state-box {
+  background: white;
+  border-radius: 10px;
+  padding: 3rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.empty-state-box p {
+  color: #a0aec0;
+  margin-bottom: 1rem;
+}
+
+/* Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.data-table th, .data-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 0.9rem;
+}
+
+.data-table th {
+  background-color: #f7fafc;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+/* Show pages */
+.show-page h1 {
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.show-page p {
+  margin-bottom: 0.5rem;
+}
+
+.journal-entry {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.5rem 0 1rem;
+}
+
+/* Calendar */
+.calendar-page h1 {
+  color: #2d3748;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.month-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.month-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2d3748;
+  min-width: 150px;
+  text-align: center;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  background: #e2e8f0;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.calendar-day-header {
+  background: #2b6cb0;
+  color: white;
+  text-align: center;
+  padding: 0.5rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.calendar-day {
+  background: white;
+  min-height: 70px;
+  padding: 0.4rem;
+}
+
+.calendar-day.other-month {
+  background: #f7fafc;
+}
+
+.calendar-day.today .day-number {
+  background: #3182ce;
+  color: white;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-day.selected {
+  background: #ebf8ff;
+  outline: 2px solid #4299e1;
+}
+
+.day-link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
+.day-number {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 0.3rem;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.other-month .day-number {
+  color: #cbd5e0;
+}
+
+.day-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 2px;
+}
+
+.dot-task { background-color: #4299e1; }
+.dot-mood { background-color: #ed64a6; }
+.dot-med { background-color: #48bb78; }
+
+/* Day details */
+.day-details {
+  margin-top: 2rem;
+}
+
+.day-details h2 {
+  margin-bottom: 1rem;
+  color: #2d3748;
+}
+
+.day-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}

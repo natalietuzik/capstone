@@ -1,0 +1,5 @@
+<div class="form-page">
+  <h1>Log: <%= @medication.name %></h1>
+  <%= render 'form', medication_log: @medication_log, medication: @medication %>
+  <%= link_to "Cancel", medication_path(@medication), class: "btn btn-secondary" %>
+</div>

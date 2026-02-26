@@ -1,0 +1,5 @@
+<div class="form-page">
+  <h1>Edit Log: <%= @medication_log.medication.name %></h1>
+  <%= render 'form', medication_log: @medication_log, medication: @medication_log.medication %>
+  <%= link_to "Cancel", medication_path(@medication_log.medication), class: "btn btn-secondary" %>
+</div>

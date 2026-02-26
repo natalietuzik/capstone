@@ -1,0 +1,659 @@
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "medication_logs"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "medication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "date" date, "medication_id" integer NOT NULL, "notes" text, "taken" boolean DEFAULT FALSE, "time_taken" time, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_medication_id" ON "medication_logs" ("medication_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_user_id" ON "medication_logs" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "medications"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "medications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "dosage" varchar, "instructions" text, "name" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medications_on_user_id" ON "medications" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "mental_health_entries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "mental_health_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "anxiety" integer, "created_at" datetime(6) NOT NULL, "date" date, "journal" text, "mood" integer, "sleep_hours" decimal, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_mental_health_entries_on_user_id_and_date" ON "mental_health_entries" ("user_id", "date")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_mental_health_entries_on_user_id" ON "mental_health_entries" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "planner_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "planner_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "completed" boolean DEFAULT FALSE, "created_at" datetime(6) NOT NULL, "date" date, "notes" text, "time_of_day" time, "title" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_planner_items_on_user_id" ON "planner_items" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "email" varchar, "password_digest" varchar, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amedication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "date" date, "medication_id" integer NOT NULL, "notes" text, "taken" boolean DEFAULT FALSE, "time_taken" time, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amedication_logs_on_user_id" ON "amedication_logs" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amedication_logs_on_medication_id" ON "amedication_logs" ("medication_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "amedication_logs" ("id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id")
+                     SELECT "id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id" FROM "medication_logs"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "medication_logs"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "medication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "date" date, "medication_id" integer NOT NULL, "notes" text, "taken" boolean DEFAULT FALSE, "time_taken" time, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_67d77b7bd2"
+FOREIGN KEY ("medication_id")
+  REFERENCES "medications" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_medication_id" ON "medication_logs" ("medication_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_user_id" ON "medication_logs" ("user_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "medication_logs" ("id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id")
+                     SELECT "id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id" FROM "amedication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "amedication_logs"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amedication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "date" date, "medication_id" integer NOT NULL, "notes" text, "taken" boolean DEFAULT FALSE, "time_taken" time, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amedication_logs_on_user_id" ON "amedication_logs" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amedication_logs_on_medication_id" ON "amedication_logs" ("medication_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "amedication_logs" ("id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id")
+                     SELECT "id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id" FROM "medication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "medication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "medication_logs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "date" date, "medication_id" integer NOT NULL, "notes" text, "taken" boolean DEFAULT FALSE, "time_taken" time, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_67d77b7bd2"
+FOREIGN KEY ("medication_id")
+  REFERENCES "medications" ("id")
+, CONSTRAINT "fk_rails_5c0306f23a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_medication_id" ON "medication_logs" ("medication_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medication_logs_on_user_id" ON "medication_logs" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "medication_logs" ("id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id")
+                     SELECT "id","created_at","date","medication_id","notes","taken","time_taken","updated_at","user_id" FROM "amedication_logs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "amedication_logs"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amedications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "dosage" varchar, "instructions" text, "name" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amedications_on_user_id" ON "amedications" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "amedications" ("id","created_at","dosage","instructions","name","updated_at","user_id")
+                     SELECT "id","created_at","dosage","instructions","name","updated_at","user_id" FROM "medications"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "medications"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "medications" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "dosage" varchar, "instructions" text, "name" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_fc718069ca"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_medications_on_user_id" ON "medications" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "medications" ("id","created_at","dosage","instructions","name","updated_at","user_id")
+                     SELECT "id","created_at","dosage","instructions","name","updated_at","user_id" FROM "amedications"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "amedications"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amental_health_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "anxiety" integer, "created_at" datetime(6) NOT NULL, "date" date, "journal" text, "mood" integer, "sleep_hours" decimal, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_amental_health_entries_on_user_id" ON "amental_health_entries" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_amental_health_entries_on_user_id_and_date" ON "amental_health_entries" ("user_id", "date")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "amental_health_entries" ("id","anxiety","created_at","date","journal","mood","sleep_hours","updated_at","user_id")
+                     SELECT "id","anxiety","created_at","date","journal","mood","sleep_hours","updated_at","user_id" FROM "mental_health_entries"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "mental_health_entries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "mental_health_entries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "anxiety" integer, "created_at" datetime(6) NOT NULL, "date" date, "journal" text, "mood" integer, "sleep_hours" decimal, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_4bee606b33"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_mental_health_entries_on_user_id_and_date" ON "mental_health_entries" ("user_id", "date")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_mental_health_entries_on_user_id" ON "mental_health_entries" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "mental_health_entries" ("id","anxiety","created_at","date","journal","mood","sleep_hours","updated_at","user_id")
+                     SELECT "id","anxiety","created_at","date","journal","mood","sleep_hours","updated_at","user_id" FROM "amental_health_entries"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "amental_health_entries"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aplanner_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "completed" boolean DEFAULT FALSE, "created_at" datetime(6) NOT NULL, "date" date, "notes" text, "time_of_day" time, "title" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aplanner_items_on_user_id" ON "aplanner_items" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "aplanner_items" ("id","completed","created_at","date","notes","time_of_day","title","updated_at","user_id")
+                     SELECT "id","completed","created_at","date","notes","time_of_day","title","updated_at","user_id" FROM "planner_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "planner_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "planner_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "completed" boolean DEFAULT FALSE, "created_at" datetime(6) NOT NULL, "date" date, "notes" text, "time_of_day" time, "title" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_1eb10afb62"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_planner_items_on_user_id" ON "planner_items" ("user_id")[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "planner_items" ("id","completed","created_at","date","notes","time_of_day","title","updated_at","user_id")
+                     SELECT "id","completed","created_at","date","notes","time_of_day","title","updated_at","user_id" FROM "aplanner_items"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aplanner_items"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20260226010525)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20260226010524),
+(20260226010523),
+(20260226010522),
+(20260226010521);[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'test', '2026-02-26 01:10:39.983929', '2026-02-26 01:10:39.983931') RETURNING "key"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', '50331fa267fcff3e1da3ed0651d26ad155c19781', '2026-02-26 01:10:39.984760', '2026-02-26 01:10:39.984761') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.3ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.033445', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.033445', 980190962), (298486374, '2026-02-26 01:10:40.033445', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.033445', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.034766', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.034766', 980190962), (298486374, '2026-02-26 01:10:40.034766', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.034766', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.034875', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.034875', 980190962), (298486374, 1, '2026-02-26 01:10:40.034875', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.034875', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.035312', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.035312', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.035312', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.035312', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.035753', 'MyString', 'MyString', '2026-02-26 01:10:40.035753'), (298486374, '2026-02-26 01:10:40.035753', 'MyString', 'MyString', '2026-02-26 01:10:40.035753')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.040097', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.040097', 980190962), (298486374, '2026-02-26 01:10:40.040097', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.040097', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.040161', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.040161', 980190962), (298486374, '2026-02-26 01:10:40.040161', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.040161', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.040197', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.040197', 980190962), (298486374, 1, '2026-02-26 01:10:40.040197', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.040197', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.040233', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.040233', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.040233', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.040233', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.040266', 'MyString', 'MyString', '2026-02-26 01:10:40.040266'), (298486374, '2026-02-26 01:10:40.040266', 'MyString', 'MyString', '2026-02-26 01:10:40.040266')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.043548', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.043548', 980190962), (298486374, '2026-02-26 01:10:40.043548', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.043548', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.043669', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.043669', 980190962), (298486374, '2026-02-26 01:10:40.043669', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.043669', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.043736', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.043736', 980190962), (298486374, 1, '2026-02-26 01:10:40.043736', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.043736', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.043803', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.043803', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.043803', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.043803', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.043867', 'MyString', 'MyString', '2026-02-26 01:10:40.043867'), (298486374, '2026-02-26 01:10:40.043867', 'MyString', 'MyString', '2026-02-26 01:10:40.043867')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.047819', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.047819', 980190962), (298486374, '2026-02-26 01:10:40.047819', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.047819', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.047914', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.047914', 980190962), (298486374, '2026-02-26 01:10:40.047914', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.047914', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.047975', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.047975', 980190962), (298486374, 1, '2026-02-26 01:10:40.047975', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.047975', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.048041', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.048041', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.048041', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.048041', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.048105', 'MyString', 'MyString', '2026-02-26 01:10:40.048105'), (298486374, '2026-02-26 01:10:40.048105', 'MyString', 'MyString', '2026-02-26 01:10:40.048105')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.3ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.051617', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.051617', 980190962), (298486374, '2026-02-26 01:10:40.051617', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.051617', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.051681', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.051681', 980190962), (298486374, '2026-02-26 01:10:40.051681', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.051681', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.051718', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.051718', 980190962), (298486374, 1, '2026-02-26 01:10:40.051718', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.051718', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.051754', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.051754', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.051754', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.051754', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.051786', 'MyString', 'MyString', '2026-02-26 01:10:40.051786'), (298486374, '2026-02-26 01:10:40.051786', 'MyString', 'MyString', '2026-02-26 01:10:40.051786')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.054905', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.054905', 980190962), (298486374, '2026-02-26 01:10:40.054905', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.054905', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.054969', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.054969', 980190962), (298486374, '2026-02-26 01:10:40.054969', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.054969', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.055005', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.055005', 980190962), (298486374, 1, '2026-02-26 01:10:40.055005', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.055005', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.055039', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.055039', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.055039', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.055039', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.055071', 'MyString', 'MyString', '2026-02-26 01:10:40.055071'), (298486374, '2026-02-26 01:10:40.055071', 'MyString', 'MyString', '2026-02-26 01:10:40.055071')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.058140', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.058140', 980190962), (298486374, '2026-02-26 01:10:40.058140', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.058140', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.058202', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.058202', 980190962), (298486374, '2026-02-26 01:10:40.058202', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.058202', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.058237', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.058237', 980190962), (298486374, 1, '2026-02-26 01:10:40.058237', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.058237', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.058272', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.058272', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.058272', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.058272', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.058304', 'MyString', 'MyString', '2026-02-26 01:10:40.058304'), (298486374, '2026-02-26 01:10:40.058304', 'MyString', 'MyString', '2026-02-26 01:10:40.058304')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.061514', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.061514', 980190962), (298486374, '2026-02-26 01:10:40.061514', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.061514', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.061598', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.061598', 980190962), (298486374, '2026-02-26 01:10:40.061598', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.061598', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.061639', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.061639', 980190962), (298486374, 1, '2026-02-26 01:10:40.061639', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.061639', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.061675', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.061675', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.061675', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.061675', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.061709', 'MyString', 'MyString', '2026-02-26 01:10:40.061709'), (298486374, '2026-02-26 01:10:40.061709', 'MyString', 'MyString', '2026-02-26 01:10:40.061709')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.3ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.065611', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.065611', 980190962), (298486374, '2026-02-26 01:10:40.065611', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.065611', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.065711', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.065711', 980190962), (298486374, '2026-02-26 01:10:40.065711', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.065711', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.065781', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.065781', 980190962), (298486374, 1, '2026-02-26 01:10:40.065781', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.065781', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.065852', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.065852', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.065852', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.065852', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.065919', 'MyString', 'MyString', '2026-02-26 01:10:40.065919'), (298486374, '2026-02-26 01:10:40.065919', 'MyString', 'MyString', '2026-02-26 01:10:40.065919')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.3ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.069946', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.069946', 980190962), (298486374, '2026-02-26 01:10:40.069946', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.069946', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.070009', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.070009', 980190962), (298486374, '2026-02-26 01:10:40.070009', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.070009', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.070045', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.070045', 980190962), (298486374, 1, '2026-02-26 01:10:40.070045', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.070045', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.070079', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.070079', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.070079', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.070079', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.070112', 'MyString', 'MyString', '2026-02-26 01:10:40.070112'), (298486374, '2026-02-26 01:10:40.070112', 'MyString', 'MyString', '2026-02-26 01:10:40.070112')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.073842', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.073842', 980190962), (298486374, '2026-02-26 01:10:40.073842', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.073842', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.073908', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.073908', 980190962), (298486374, '2026-02-26 01:10:40.073908', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.073908', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.073944', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.073944', 980190962), (298486374, 1, '2026-02-26 01:10:40.073944', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.073944', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.073979', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.073979', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.073979', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.073979', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.074011', 'MyString', 'MyString', '2026-02-26 01:10:40.074011'), (298486374, '2026-02-26 01:10:40.074011', 'MyString', 'MyString', '2026-02-26 01:10:40.074011')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.077854', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.077854', 980190962), (298486374, '2026-02-26 01:10:40.077854', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.077854', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.077918', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.077918', 980190962), (298486374, '2026-02-26 01:10:40.077918', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.077918', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.077956', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.077956', 980190962), (298486374, 1, '2026-02-26 01:10:40.077956', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.077956', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.077992', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.077992', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.077992', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.077992', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.078026', 'MyString', 'MyString', '2026-02-26 01:10:40.078026'), (298486374, '2026-02-26 01:10:40.078026', 'MyString', 'MyString', '2026-02-26 01:10:40.078026')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.081441', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.081441', 980190962), (298486374, '2026-02-26 01:10:40.081441', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.081441', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.081505', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.081505', 980190962), (298486374, '2026-02-26 01:10:40.081505', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.081505', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.081541', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.081541', 980190962), (298486374, 1, '2026-02-26 01:10:40.081541', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.081541', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.081603', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.081603', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.081603', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.081603', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.081642', 'MyString', 'MyString', '2026-02-26 01:10:40.081642'), (298486374, '2026-02-26 01:10:40.081642', 'MyString', 'MyString', '2026-02-26 01:10:40.081642')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.085254', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.085254', 980190962), (298486374, '2026-02-26 01:10:40.085254', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.085254', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.085319', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.085319', 980190962), (298486374, '2026-02-26 01:10:40.085319', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.085319', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.085355', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.085355', 980190962), (298486374, 1, '2026-02-26 01:10:40.085355', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.085355', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.085392', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.085392', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.085392', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.085392', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.085701', 'MyString', 'MyString', '2026-02-26 01:10:40.085701'), (298486374, '2026-02-26 01:10:40.085701', 'MyString', 'MyString', '2026-02-26 01:10:40.085701')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.089639', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.089639', 980190962), (298486374, '2026-02-26 01:10:40.089639', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.089639', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.089703', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.089703', 980190962), (298486374, '2026-02-26 01:10:40.089703', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.089703', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.089741', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.089741', 980190962), (298486374, 1, '2026-02-26 01:10:40.089741', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.089741', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.089776', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.089776', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.089776', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.089776', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.089808', 'MyString', 'MyString', '2026-02-26 01:10:40.089808'), (298486374, '2026-02-26 01:10:40.089808', 'MyString', 'MyString', '2026-02-26 01:10:40.089808')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.092721', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.092721', 980190962), (298486374, '2026-02-26 01:10:40.092721', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.092721', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.092784', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.092784', 980190962), (298486374, '2026-02-26 01:10:40.092784', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.092784', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.092821', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.092821', 980190962), (298486374, 1, '2026-02-26 01:10:40.092821', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.092821', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.092855', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.092855', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.092855', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.092855', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.093100', 'MyString', 'MyString', '2026-02-26 01:10:40.093100'), (298486374, '2026-02-26 01:10:40.093100', 'MyString', 'MyString', '2026-02-26 01:10:40.093100')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.096100', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.096100', 980190962), (298486374, '2026-02-26 01:10:40.096100', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.096100', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.096164', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.096164', 980190962), (298486374, '2026-02-26 01:10:40.096164', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.096164', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.096199', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.096199', 980190962), (298486374, 1, '2026-02-26 01:10:40.096199', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.096199', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.096233', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.096233', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.096233', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.096233', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.096265', 'MyString', 'MyString', '2026-02-26 01:10:40.096265'), (298486374, '2026-02-26 01:10:40.096265', 'MyString', 'MyString', '2026-02-26 01:10:40.096265')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.2ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users";
+INSERT INTO "medication_logs" ("id", "created_at", "date", "medication_id", "notes", "taken", "time_taken", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.099411', '2026-02-26', 980190962, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.099411', 980190962), (298486374, '2026-02-26 01:10:40.099411', '2026-02-26', 298486374, 'MyText', FALSE, '2000-01-01 01:05:24', '2026-02-26 01:10:40.099411', 298486374);
+INSERT INTO "medications" ("id", "created_at", "dosage", "instructions", "name", "updated_at", "user_id") VALUES (980190962, '2026-02-26 01:10:40.099475', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.099475', 980190962), (298486374, '2026-02-26 01:10:40.099475', 'MyString', 'MyText', 'MyString', '2026-02-26 01:10:40.099475', 298486374);
+INSERT INTO "mental_health_entries" ("id", "anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (980190962, 1, '2026-02-26 01:10:40.099510', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.099510', 980190962), (298486374, 1, '2026-02-26 01:10:40.099510', '2026-02-26', 'MyText', 1, 9.99, '2026-02-26 01:10:40.099510', 298486374);
+INSERT INTO "planner_items" ("id", "completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (980190962, FALSE, '2026-02-26 01:10:40.099547', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.099547', 980190962), (298486374, FALSE, '2026-02-26 01:10:40.099547', '2026-02-26', 'MyText', '2000-01-01 01:05:22', 'MyString', '2026-02-26 01:10:40.099547', 298486374);
+INSERT INTO "users" ("id", "created_at", "email", "password_digest", "updated_at") VALUES (980190962, '2026-02-26 01:10:40.099607', 'MyString', 'MyString', '2026-02-26 01:10:40.099607'), (298486374, '2026-02-26 01:10:40.099607', 'MyString', 'MyString', '2026-02-26 01:10:40.099607')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mFixtures Load (0.1ms)[0m  [1m[31mDELETE FROM "medication_logs";
+DELETE FROM "medications";
+DELETE FROM "mental_health_entries";
+DELETE FROM "planner_items";
+DELETE FROM "users"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_key_check[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------
+UserTest: test_has_secure_password
+----------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:11:44.612428"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:11:44.612428"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------
+UserTest: test_email_must_be_unique
+-----------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:11:44.617759"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:11:44.617759"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------
+UserTest: test_email_must_be_present
+------------------------------------
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------
+UserTest: test_valid_user
+-------------------------
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------
+UserTest: test_email_uniqueness_is_case_insensitive
+---------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:11:44.625635"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:11:44.625635"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-----------------------------------------------------
+UserTest: test_password_must_be_at_least_6_characters
+-----------------------------------------------------
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------------
+MentalHealthEntryTest: test_mood_must_be_between_1_and_10
+---------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:11:44.632732"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:11:44.632732"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE MentalHealthEntry Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE MentalHealthEntry Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------------------
+MentalHealthEntryTest: test_anxiety_must_be_present
+---------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:11:44.640136"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:11:44.640136"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------------------
+MentalHealthEntryTest: test_anxiety_must_be_between_1_and_10
+------------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:11:44.643306"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:11:44.643306"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE MentalHealthEntry Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE MentalHealthEntry Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------------
+MentalHealthEntryTest: test_one_entry_per_user_per_date
+-------------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:11:44.647107"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:11:44.647107"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mMentalHealthEntry Create (0.1ms)[0m  [1m[32mINSERT INTO "mental_health_entries" ("anxiety", "created_at", "date", "journal", "mood", "sleep_hours", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["anxiety", 4], ["created_at", "2026-02-26 01:11:44.648308"], ["date", "2026-02-26"], ["journal", nil], ["mood", 7], ["sleep_hours", nil], ["updated_at", "2026-02-26 01:11:44.648308"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------
+MentalHealthEntryTest: test_date_must_be_present
+------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:11:44.651520"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:11:44.651520"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" IS NULL AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------------
+MentalHealthEntryTest: test_mood_must_be_present
+------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:11:44.654655"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:11:44.654655"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+---------------------------------------
+MentalHealthEntryTest: test_valid_entry
+---------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (5.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:11:44.662673"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:11:44.662673"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mMentalHealthEntry Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mental_health_entries" WHERE "mental_health_entries"."date" = ? AND "mental_health_entries"."user_id" = ? LIMIT ?[0m  [["date", "2026-02-26"], ["user_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------
+PlannerItemTest: test_belongs_to_user
+-------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:11:44.666047"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:11:44.666047"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------------
+PlannerItemTest: test_completed_defaults_to_false
+-------------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:11:44.672051"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:11:44.672051"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPlannerItem Create (0.2ms)[0m  [1m[32mINSERT INTO "planner_items" ("completed", "created_at", "date", "notes", "time_of_day", "title", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["completed", 0], ["created_at", "2026-02-26 01:11:44.672907"], ["date", "2026-02-26"], ["notes", nil], ["time_of_day", nil], ["title", "Test"], ["updated_at", "2026-02-26 01:11:44.672907"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+-------------------------------------------
+PlannerItemTest: test_title_must_be_present
+-------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:11:44.675890"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:11:44.675890"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+------------------------------------------
+PlannerItemTest: test_date_must_be_present
+------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:11:44.678683"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:11:44.678683"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mBEGIN deferred TRANSACTION[0m
+----------------------------------------
+PlannerItemTest: test_valid_planner_item
+----------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "[FILTERED]"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["created_at", "2026-02-26 01:11:44.681566"], ["email", "[FILTERED]"], ["password_digest", "[FILTERED]"], ["updated_at", "2026-02-26 01:11:44.681566"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION[0m
