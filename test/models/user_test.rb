@@ -37,4 +37,36 @@ class UserTest < ActiveSupport::TestCase
     assert @user.authenticate("password123")
     assert_not @user.authenticate("wrong")
   end
+
+  test "remember sets remember_digest" do
+    @user.save
+    assert_nil @user.remember_digest
+    @user.remember
+    assert_not_nil @user.remember_digest
+    assert_not_nil @user.remember_token
+  end
+
+  test "authenticated? returns true for valid token" do
+    @user.save
+    @user.remember
+    assert @user.authenticated?(@user.remember_token)
+  end
+
+  test "authenticated? returns false for wrong token" do
+    @user.save
+    @user.remember
+    assert_not @user.authenticated?("wrongtoken")
+  end
+
+  test "authenticated? returns false when digest is nil" do
+    @user.save
+    assert_not @user.authenticated?("anytoken")
+  end
+
+  test "forget clears remember_digest" do
+    @user.save
+    @user.remember
+    @user.forget
+    assert_nil @user.reload.remember_digest
+  end
 end
