@@ -65,5 +65,5 @@ group :test do
   gem "selenium-webdriver"
   # Pin minitest to 5.x; minitest 6.x changed the run method signature and is
   # incompatible with railties 8.0 (line_filtering.rb calls run with 3 args).
-  gem "minitest", "~> 5.25"
+  gem "minitest", "~> 6.0"
 end
